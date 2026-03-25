@@ -1,7 +1,7 @@
 # Crowns Estates Website — Session Handover
 
 **Last Updated:** 2026-03-25
-**Sessions:** 1
+**Sessions:** 2
 **Repo:** https://github.com/jalookout7-eng/crown-estates-website
 **Domain:** www.crownsestates.co.uk
 **Local path (original machine):** `C:\Users\John\crown-estates-website`
@@ -73,6 +73,10 @@ The backend is pending client approval of the design. Outstanding tasks from the
 - [ ] Sample blog post content (5 articles)
 - [ ] Schema.org JSON-LD markup
 - [ ] Screenshot.png for theme
+- [ ] Custom admin dashboard (branded, stat cards, clean sidebar — matching griyakita reference)
+- [ ] Newsletter subscribers admin page + DB table
+- [ ] Tour requests management page
+- [ ] Branded login page (Crowns Estates logo, gold/black)
 - [ ] Server deployment
 
 ---
@@ -99,7 +103,7 @@ All values are CSS custom properties in `style.css` — one change updates the e
 - **Theme:** Custom (built on Underscores `_s` starter)
 - **Fields:** Advanced Custom Fields (ACF)
 - **JS:** Vanilla JavaScript (no jQuery dependency)
-- **Hosting:** TBD — VPS or managed WordPress (domain registered: crownsestates.co.uk)
+- **Hosting:** TBD — recommended: Cloudways + DigitalOcean (~£10-15/mo). Alternatives: SiteGround (easiest), bare DigitalOcean/Vultr (cheapest ~£4/mo). Domain registered: crownsestates.co.uk
 
 ---
 
@@ -138,7 +142,7 @@ Then read:
 2. `docs/superpowers/plans/2026-03-24-crowns-estates-implementation.md` — the implementation plan
 3. This file — for session context
 
-The next step is: **wait for client feedback on the design preview**, then begin backend implementation starting from Task 4 of the plan (Tasks 1-3 are effectively done via the front-end work).
+The next step is: **wait for client to confirm the job**, then begin backend implementation starting from Task 4 of the plan (Tasks 1-3 are effectively done via the front-end work). Task 19 (Custom Admin Dashboard) can be built alongside other backend tasks.
 
 ---
 
@@ -159,7 +163,16 @@ The next step is: **wait for client feedback on the design preview**, then begin
 
 ## Reference Screenshots
 
-The user saved screenshots of a sample backend (griyakita.digision.id/admin) and property portals at `C:\Users\John\Pictures\Screenshots\` (2026-03-24 dated files). These were used as general reference for the backend admin panel concept — not directly implemented yet.
+The user saved screenshots of a sample backend (griyakita.digision.id/admin) showing a Laravel + Filament PHP admin panel. 7 screenshots saved in project root (`Screenshot 2026-03-25 14465*.png`) showing:
+1. **Dashboard** — stat cards (Total Properties, Active, Sold/Rented, Pending Review, Tour Requests, Total Users, Property Value) with sparkline charts + visitor stats
+2. **Visitor Locations** — table with location, visits, unique visitors, last visit
+3. **Posts** — stats cards (Total Posts, Published, Draft, Views, Featured) + searchable list
+4. **Categories** — table with name, icon, status, post count, order, edit/delete
+5. **Newsletter Subscribers** — list page with search
+6. **Properties** — list with thumbnail, title, type, listing status, price, city, beds/baths
+7. **Visitor Analytics** — total/today/unique visitors, weekly/monthly, countries, device type
+
+These are the **reference design** for the custom WordPress admin dashboard (Task 19 in the implementation plan). WordPress admin will be customised to match this clean, branded experience.
 
 ---
 
@@ -176,3 +189,19 @@ The user saved screenshots of a sample backend (griyakita.digision.id/admin) and
 - Fixed mobile header bug (nav links showing instead of hamburger)
 - **Preview URL:** `https://jalookout7-eng.github.io/crown-estates-website/preview/`
 - **Status:** Awaiting client feedback on design before starting backend
+
+### Session 2 — 2026-03-25
+- Reviewed 7 griyakita admin dashboard screenshots (Laravel + Filament PHP)
+- Confirmed WordPress.org (self-hosted) is the correct foundation
+- Mapped all griyakita features to WordPress equivalents — all achievable
+- Added **Task 19** to implementation plan: Custom Admin Dashboard & Branded Backend
+  - Custom dashboard page with stat cards + sparkline charts (Chart.js)
+  - Reorganised admin sidebar (Dashboard, Properties, Tour Requests, Blog, Users, Analytics, Settings)
+  - Branded login page (Crowns Estates logo, gold/black colours)
+  - Newsletter Subscribers admin page + DB table
+  - Tour Requests management page
+  - Admin colour scheme customisation
+- Updated implementation plan: now **19 tasks, 86 steps** (was 18/79)
+- Discussed VPS/hosting options (recommended: Cloudways with DigitalOcean, ~£10-15/mo)
+- Updated file structure in plan to include `admin-dashboard.php` and `admin-dashboard.js`
+- **Status:** Still awaiting client confirmation of the job before proceeding with backend

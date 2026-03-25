@@ -50,7 +50,8 @@ crown-estates-website/
     │   ├── enqueue.php                   # Script and style enqueuing
     │   ├── currency-helpers.php          # Multi-currency conversion + formatting
     │   ├── enquiry-handler.php           # Form submission → DB + email + auto-reply
-    │   └── schema-markup.php             # JSON-LD structured data output
+    │   ├── schema-markup.php             # JSON-LD structured data output
+    │   └── admin-dashboard.php           # Custom admin dashboard, sidebar, branding
     ├── template-parts/
     │   ├── property-card.php             # Property listing card
     │   ├── testimonial-card.php          # Testimonial display card
@@ -64,7 +65,8 @@ crown-estates-website/
     │   ├── currency-toggle.js            # Front-end currency switching
     │   ├── modal.js                      # Register Interest modal open/close
     │   ├── city-filter.js                # Projects page AJAX/JS city filter
-    │   └── faq-accordion.js              # FAQ expand/collapse
+    │   ├── faq-accordion.js              # FAQ expand/collapse
+    │   └── admin-dashboard.js            # Admin dashboard charts (Chart.js)
     ├── img/
     │   └── placeholder-property.jpg      # Fallback property image
     └── sample-content/                   # Sample blog posts for WordPress import
@@ -1082,6 +1084,227 @@ Check that `https://github.com/jalookout7-eng/crown-estates-website` contains al
 
 ---
 
+## Task 19: Custom Admin Dashboard & Branded Backend
+
+**Context:** The client expects a clean, branded admin panel (similar to the Filament/Laravel dashboard in the griyakita reference screenshots). This task customises the WordPress admin to deliver that experience — branded dashboard with stat cards, clean sidebar navigation, and property/blog management views.
+
+**Reference:** 7 screenshots saved in project root (`Screenshot 2026-03-25 14465*.png`) showing: Dashboard with stat cards + sparklines, Visitor Analytics, Posts management, Categories table, Newsletter Subscribers, Properties list, and Visitor Analytics detail.
+
+**Files:**
+- Create: `wp-content/themes/crowns-estates/inc/admin-dashboard.php`
+- Create: `wp-content/themes/crowns-estates/js/admin-dashboard.js`
+- Modify: `wp-content/themes/crowns-estates/style.css` (add admin styles)
+- Modify: `wp-content/themes/crowns-estates/functions.php` (add include)
+- Modify: `wp-content/themes/crowns-estates/inc/enqueue.php` (admin scripts)
+
+- [ ] **Step 1: Create `inc/admin-dashboard.php` — Custom dashboard page**
+
+Replace the default WordPress dashboard with a branded Crowns Estates dashboard. Register a custom admin page as the default landing page after login.
+
+Dashboard stat cards (matching griyakita layout):
+- **Row 1:** Total Properties, Active Properties, Sold/Rented, Pending Review (with sparkline trends)
+- **Row 2:** Tour Requests (pending count), Total Users, Total Property Value (formatted)
+- **Row 3:** Total Visitors, Today's Visitors (% change), Unique Visitors
+- **Row 4:** This Week visitors, This Month visitors
+
+```php
+<?php
+// Remove default WordPress dashboard widgets
+function ce_remove_dashboard_widgets() {
+    remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
+    remove_meta_box('dashboard_primary', 'dashboard', 'side');
+    remove_meta_box('dashboard_secondary', 'dashboard', 'side');
+    remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
+}
+add_action('wp_dashboard_setup', 'ce_remove_dashboard_widgets');
+
+// Add custom dashboard widget
+function ce_add_dashboard_widgets() {
+    wp_add_dashboard_widget(
+        'ce_dashboard_overview',
+        'Crowns Estates Overview',
+        'ce_dashboard_overview_render'
+    );
+}
+add_action('wp_dashboard_setup', 'ce_add_dashboard_widgets');
+
+function ce_dashboard_overview_render() {
+    $total_properties = wp_count_posts('ce_property')->publish ?? 0;
+    $total_enquiries = $GLOBALS['wpdb']->get_var("SELECT COUNT(*) FROM {$GLOBALS['wpdb']->prefix}ce_enquiries");
+    $total_users = count_users()['total_users'];
+    // Render stat cards grid
+    // ... (full implementation in plan execution)
+}
+```
+
+- [ ] **Step 2: Customise admin sidebar navigation**
+
+Reorganise the WordPress admin menu to match griyakita's clean sidebar structure:
+
+```
+Dashboard
+─────────────
+Filament Shield (mapped to)
+  → Roles (Users > Roles via Members plugin or custom)
+─────────────
+User Management
+  → Users
+─────────────
+Blog Management
+  → Posts
+  → Categories
+  → Tags
+  → Newsletter Subscribers (custom admin page)
+─────────────
+Property Management
+  → Properties (ce_property CPT)
+  → Tour Requests (custom admin page or CPT)
+─────────────
+Analytics
+  → Visitor Analytics (custom page pulling from GA or simple built-in tracker)
+─────────────
+Master Data
+  → Cities (ce_city taxonomy)
+  → Property Types
+─────────────
+Site Settings (ACF options)
+```
+
+```php
+// Reorder and rename admin menu items
+function ce_custom_admin_menu() {
+    // Remove items we don't need visible
+    remove_menu_page('edit-comments.php');
+    remove_menu_page('tools.php');
+
+    // Rename "Posts" to "Blog Posts"
+    global $menu;
+    foreach ($menu as $key => $item) {
+        if ($item[2] === 'edit.php') {
+            $menu[$key][0] = 'Blog Posts';
+        }
+    }
+
+    // Add Newsletter Subscribers page
+    add_menu_page(
+        'Newsletter Subscribers',
+        'Subscribers',
+        'manage_options',
+        'ce-subscribers',
+        'ce_subscribers_page_render',
+        'dashicons-email-alt',
+        26
+    );
+
+    // Add Tour Requests page (if using custom DB table instead of CPT)
+    add_menu_page(
+        'Tour Requests',
+        'Tour Requests',
+        'manage_options',
+        'ce-tour-requests',
+        'ce_tour_requests_page_render',
+        'dashicons-calendar-alt',
+        27
+    );
+}
+add_action('admin_menu', 'ce_custom_admin_menu');
+```
+
+- [ ] **Step 3: Brand the admin — login page, colours, header**
+
+Custom login page with Crowns Estates branding (logo, gold/black colours):
+
+```php
+// Custom login logo
+function ce_login_logo() {
+    $logo_url = get_template_directory_uri() . '/img/logo.png';
+    echo '<style>
+        body.login { background: #0A0A0A; }
+        #login h1 a {
+            background-image: url(' . esc_url($logo_url) . ');
+            width: 200px; height: 80px;
+            background-size: contain; background-repeat: no-repeat;
+        }
+        .login form { border-radius: 8px; }
+        .wp-core-ui .button-primary {
+            background: #C4973A !important; border-color: #A37E2C !important;
+        }
+    </style>';
+}
+add_action('login_enqueue_scripts', 'ce_login_logo');
+
+// Custom admin colour scheme
+function ce_admin_styles() {
+    echo '<style>
+        #adminmenuback, #adminmenuwrap { background: #1a1a1a; }
+        #adminmenu .wp-has-current-submenu .wp-submenu-head,
+        #adminmenu a.wp-has-current-submenu { background: #C4973A !important; }
+        #wpadminbar { background: #0A0A0A; }
+    </style>';
+}
+add_action('admin_head', 'ce_admin_styles');
+
+// Custom admin footer
+function ce_admin_footer_text() {
+    return 'Crowns Estates Admin Panel &mdash; Powered by WordPress';
+}
+add_filter('admin_footer_text', 'ce_admin_footer_text');
+```
+
+- [ ] **Step 4: Create Newsletter Subscribers admin page**
+
+Admin page with WP_List_Table showing all newsletter subscribers (from rentals page email capture and any other signup forms). Columns: Name, Email, Date Subscribed, Source. Add/Delete functionality. CSV export button.
+
+Requires a `{prefix}ce_subscribers` table (add creation alongside the enquiries table in `enquiry-handler.php`):
+
+```php
+function ce_create_subscribers_table() {
+    global $wpdb;
+    $table = $wpdb->prefix . 'ce_subscribers';
+    $charset = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        name VARCHAR(255),
+        email VARCHAR(255) NOT NULL UNIQUE,
+        source VARCHAR(100) DEFAULT 'website',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+    ) $charset;";
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    dbDelta($sql);
+}
+```
+
+- [ ] **Step 5: Create `js/admin-dashboard.js` — Chart.js sparklines**
+
+Enqueue Chart.js from CDN on admin dashboard page only. Render small sparkline charts in each stat card (matching griyakita's visual style). Data passed via `wp_localize_script`.
+
+- [ ] **Step 6: Add admin asset enqueuing to `inc/enqueue.php`**
+
+```php
+function ce_admin_enqueue($hook) {
+    // Only on dashboard
+    if ($hook === 'index.php') {
+        wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js', [], '4.0', true);
+        wp_enqueue_script('ce-admin-dashboard', get_template_directory_uri() . '/js/admin-dashboard.js', ['chartjs'], '1.0', true);
+        wp_localize_script('ce-admin-dashboard', 'ceDashData', [
+            'properties' => wp_count_posts('ce_property'),
+            'enquiries'  => $GLOBALS['wpdb']->get_var("SELECT COUNT(*) FROM {$GLOBALS['wpdb']->prefix}ce_enquiries"),
+        ]);
+    }
+}
+add_action('admin_enqueue_scripts', 'ce_admin_enqueue');
+```
+
+- [ ] **Step 7: Add include to `functions.php` and commit**
+
+```bash
+git add wp-content/themes/crowns-estates/inc/admin-dashboard.php wp-content/themes/crowns-estates/js/admin-dashboard.js wp-content/themes/crowns-estates/inc/enqueue.php wp-content/themes/crowns-estates/functions.php wp-content/themes/crowns-estates/style.css
+git commit -m "feat: custom admin dashboard with stat cards, branded sidebar, login page, subscribers"
+```
+
+---
+
 ## Summary
 
 | Task | Description | Est. Steps |
@@ -1104,4 +1327,5 @@ Check that `https://github.com/jalookout7-eng/crown-estates-website` contains al
 | 16 | Legal pages & 404 | 3 |
 | 17 | Sample content, placeholders & screenshot | 5 |
 | 18 | Final integration & push | 5 |
-| **Total** | | **79 steps** |
+| 19 | Custom admin dashboard & branded backend | 7 |
+| **Total** | | **86 steps** |

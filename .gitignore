@@ -23,6 +23,11 @@ wp-config.php
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Reference screenshots (described in HANDOVER.md, not needed in repo)
+Screenshot *.png
+*.jpeg
 
 # IDE
 .vscode/
