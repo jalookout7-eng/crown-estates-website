@@ -1,6 +1,7 @@
 # Crowns Estates Website — Session Handover
 
-**Date:** 2026-03-25
+**Last Updated:** 2026-03-25
+**Sessions:** 1
 **Repo:** https://github.com/jalookout7-eng/crown-estates-website
 **Domain:** www.crownsestates.co.uk
 **Local path (original machine):** `C:\Users\John\crown-estates-website`
@@ -159,3 +160,19 @@ The next step is: **wait for client feedback on the design preview**, then begin
 ## Reference Screenshots
 
 The user saved screenshots of a sample backend (griyakita.digision.id/admin) and property portals at `C:\Users\John\Pictures\Screenshots\` (2026-03-24 dated files). These were used as general reference for the backend admin panel concept — not directly implemented yet.
+
+---
+
+## Session Log
+
+### Session 1 — 2026-03-25
+- Created project from client questionnaire answers
+- Wrote design spec, reviewed by Opus (12 fixes applied)
+- Added: investment calculator, multi-currency, blog section, testimonials/Google Reviews, regulatory disclaimers
+- Wrote implementation plan (18 tasks, 79 steps), reviewed by Opus (12 fixes applied)
+- Built full front-end design preview (all 7 pages with static content)
+- Created standalone HTML preview at `preview/index.html`
+- Pushed to GitHub, enabled GitHub Pages (repo made public)
+- Fixed mobile header bug (nav links showing instead of hamburger)
+- **Preview URL:** `https://jalookout7-eng.github.io/crown-estates-website/preview/`
+- **Status:** Awaiting client feedback on design before starting backend
