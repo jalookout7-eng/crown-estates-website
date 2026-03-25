@@ -49,6 +49,26 @@
         .ce-header { top: 36px; }
         .ce-hero { margin-top: 116px; }
         .ce-404 { margin-top: 116px; }
+
+        /* Mobile fixes for preview */
+        @media (max-width: 768px) {
+            .preview-nav {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            .preview-nav__links {
+                display: none;
+            }
+            .preview-nav__badge {
+                font-size: 10px;
+            }
+            .ce-header { top: 30px; }
+            .ce-hero { margin-top: 110px; }
+            .ce-header__nav { display: none !important; }
+            .ce-header__actions { display: none; }
+            .ce-hamburger { display: flex !important; }
+        }
+
         .page-divider {
             background: #1a1a2e;
             color: white;
