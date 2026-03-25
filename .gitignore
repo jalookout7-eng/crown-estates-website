@@ -1,0 +1,32 @@
+# WordPress core
+wp-admin/
+wp-includes/
+wp-*.php
+xmlrpc.php
+license.txt
+readme.html
+
+# Uploads
+wp-content/uploads/
+
+# Plugins
+wp-content/plugins/
+
+# Other themes
+wp-content/themes/twenty*/
+
+# Environment
+.env
+.htaccess
+wp-config.php
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Node
+node_modules/

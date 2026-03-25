@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowns Estates — Website Design Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wp-content/themes/crowns-estates/style.css">
+    <style>
+        /* Preview-only styles */
+        .preview-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: #1a1a2e;
+            color: white;
+            padding: 8px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .preview-nav__links {
+            display: flex;
+            gap: 16px;
+        }
+        .preview-nav__links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .preview-nav__links a:hover,
+        .preview-nav__links a.active {
+            color: #C4973A;
+        }
+        .preview-nav__badge {
+            background: #C4973A;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .ce-header { top: 36px; }
+        .ce-hero { margin-top: 116px; }
+        .ce-404 { margin-top: 116px; }
+        .page-divider {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .page-divider span {
+            color: #C4973A;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PREVIEW TOOLBAR -->
+<div class="preview-nav">
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="preview-nav__badge">DESIGN PREVIEW</span>
+        <span>Crowns Estates Website — For Client Review</span>
+    </div>
+    <div class="preview-nav__links">
+        <a href="#home" class="active">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#blog">Blog</a>
+        <a href="#rentals">Rentals</a>
+    </div>
+</div>
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+
+<div id="home"></div>
+
+<!-- HEADER -->
+<header class="ce-header">
+    <div class="ce-header__inner">
+        <a href="#home" class="ce-header__logo">CROWNS <span>ESTATES</span></a>
+        <nav class="ce-header__nav">
+            <a href="#home" class="active">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#blog">Insights</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="ce-header__actions">
+            <div class="ce-currency-toggle">
+                <span class="ce-currency-toggle__option active">GBP</span>
+                <span class="ce-currency-toggle__option">SAR</span>
+                <span class="ce-currency-toggle__option">USD</span>
+            </div>
+            <a href="#contact" class="ce-btn ce-btn--gold ce-btn--sm">Enquire</a>
+        </div>
+        <button class="ce-hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- HERO -->
+<div class="ce-hero" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80');">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Saudi Arabia Property Investment</div>
+        <h1>Connecting Investors with Quality Property Opportunities</h1>
+        <p>British expat expertise, 20 years of local knowledge, and end-to-end investor support for the Saudi property market.</p>
+        <a href="#projects" class="ce-btn ce-btn--gold ce-btn--lg">View Opportunities</a>
+    </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="ce-trust-bar">
+    <div class="ce-container">
+        <div class="ce-trust-bar__inner">
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> 20 Years in Saudi Arabia</div>
+            <div class="ce-trust-bar__divider"></div>
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> British Expat Expertise</div>
+            <div class="ce-trust-bar__divider"></div>
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> End-to-End Investor Support</div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURED PROPERTIES -->
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Featured Opportunities</span>
+            <h2>Premium Investment Properties</h2>
+            <p class="ce-subtitle">Hand-picked developments offering strong returns and quality living in Saudi Arabia's most sought-after locations.</p>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80');">
+                    <span class="ce-property-card__badge">Riyadh</span>
+                    <span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span>
+                </div>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title">ROSHN Sedra Residences</h3>
+                    <div class="ce-property-card__type">Apartment &bull; Freehold</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>2-3</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>125</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2027</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price">&pound;160,000 <small>from</small></div>
+                        <a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80');">
+                    <span class="ce-property-card__badge">Jeddah</span>
+                    <span class="ce-property-card__status ce-property-card__status--construction">Under Construction</span>
+                </div>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title">Dar Al Arkan Jeddah Waterfront</h3>
+                    <div class="ce-property-card__type">Villa &bull; Freehold</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>4-5</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>320</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2026</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price">&pound;448,000 <small>from</small></div>
+                        <a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80');">
+                    <span class="ce-property-card__badge">NEOM</span>
+                    <span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span>
+                </div>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title">NEOM The Line Residences</h3>
+                    <div class="ce-property-card__type">Apartment &bull; Freehold</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>1-3</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>95</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2029</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price">&pound;256,000 <small>from</small></div>
+                        <a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: var(--ce-space-xl);">
+            <a href="#projects" class="ce-btn ce-btn--outline">View All Properties</a>
+        </div>
+    </div>
+</section>
+
+<!-- WHY INVEST -->
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Why Saudi Arabia</span>
+            <h2>A Market of Opportunity</h2>
+            <p class="ce-subtitle">Saudi Arabia's Vision 2030 is transforming the Kingdom into one of the world's most exciting investment destinations.</p>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-icon-block">
+                <div class="ce-icon-block__icon">&#8593;</div>
+                <h3>Market Growth</h3>
+                <p>Saudi Arabia's real estate sector is experiencing unprecedented growth driven by Vision 2030, mega-projects, and regulatory reform.</p>
+            </div>
+            <div class="ce-icon-block">
+                <div class="ce-icon-block__icon">&#9733;</div>
+                <h3>Golden Visa</h3>
+                <p>The Premium Residency programme offers investors long-term residency through qualifying real estate purchases.</p>
+            </div>
+            <div class="ce-icon-block">
+                <div class="ce-icon-block__icon">&#8962;</div>
+                <h3>Freehold Zones</h3>
+                <p>International investors can now own freehold property in designated zones across Riyadh, Jeddah, and NEOM.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Investor Testimonials</span>
+            <h2>Trusted by Investors Worldwide</h2>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="ce-testimonial-card__quote">"Crowns Estates made investing in Saudi property straightforward and stress-free. Their local knowledge is unmatched, and I felt supported at every step."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">JT</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">James T.</div>
+                        <div class="ce-testimonial-card__location">London, UK</div>
+                        <a href="#" class="ce-testimonial-card__google">&#10003; Google Review</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="ce-testimonial-card__quote">"As a first-time overseas investor, I had many concerns. The team at Crowns Estates addressed every question with patience and genuine expertise."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">SM</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">Sarah M.</div>
+                        <div class="ce-testimonial-card__location">Manchester, UK</div>
+                        <a href="#" class="ce-testimonial-card__google">&#10003; Google Review</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="ce-testimonial-card__quote">"Professional, transparent, and incredibly knowledgeable about the Saudi market. I've now purchased two properties through them."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">AK</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">Ahmed K.</div>
+                        <div class="ce-testimonial-card__location">Dubai, UAE</div>
+                        <a href="#" class="ce-testimonial-card__google">&#10003; Google Review</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SNIPPET -->
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-two-col" style="align-items: center;">
+            <div>
+                <span class="ce-label">About Crowns Estates</span>
+                <h2 style="margin-top: 8px;">Your Trusted Partner in Saudi Property Investment</h2>
+                <p>As British expats who have lived and worked in Saudi Arabia for over 20 years, we bring unparalleled local expertise to international property investors.</p>
+                <a href="#about" class="ce-btn ce-btn--outline">Learn More About Us</a>
+            </div>
+            <div style="background: var(--ce-grey-mid); height: 400px; border-radius: var(--ce-border-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ce-grey-dark);">Team Photo Placeholder</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="ce-cta">
+    <div class="ce-container">
+        <h2>Ready to Invest?</h2>
+        <p>Speak to our team about investment opportunities in Saudi Arabia.</p>
+        <a href="#contact" class="ce-btn ce-btn--gold ce-btn--lg">Talk to Our Team</a>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: PROJECTS
+     ============================================================ -->
+<div class="page-divider" id="projects"><span>Page:</span> Projects</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Investment Opportunities</div>
+        <h1>Our Projects</h1>
+        <p>Explore carefully selected property developments across Saudi Arabia's most promising investment locations.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-filter-tabs">
+            <button class="ce-filter-tab active">All Cities</button>
+            <button class="ce-filter-tab">Riyadh</button>
+            <button class="ce-filter-tab">Jeddah</button>
+            <button class="ce-filter-tab">NEOM</button>
+            <button class="ce-filter-tab">AlUla</button>
+            <button class="ce-filter-tab">Makkah</button>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80');"><span class="ce-property-card__badge">Riyadh</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">ROSHN Sedra Residences</h3><div class="ce-property-card__type">Apartment &bull; Freehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>2-3</strong> Beds</div><div class="ce-property-card__meta-item"><strong>125</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>2027</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;160,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80');"><span class="ce-property-card__badge">Jeddah</span><span class="ce-property-card__status ce-property-card__status--construction">Under Construction</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">Dar Al Arkan Waterfront</h3><div class="ce-property-card__type">Villa &bull; Freehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>4-5</strong> Beds</div><div class="ce-property-card__meta-item"><strong>320</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>2026</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;448,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80');"><span class="ce-property-card__badge">NEOM</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">NEOM The Line Residences</h3><div class="ce-property-card__type">Apartment &bull; Freehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>1-3</strong> Beds</div><div class="ce-property-card__meta-item"><strong>95</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>2029</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;256,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80');"><span class="ce-property-card__badge">Riyadh</span><span class="ce-property-card__status ce-property-card__status--ready">Ready</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">Diriyah Gate Residences</h3><div class="ce-property-card__type">Villa &bull; Freehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>3-4</strong> Beds</div><div class="ce-property-card__meta-item"><strong>250</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>Ready</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;380,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80');"><span class="ce-property-card__badge">Jeddah</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">Jeddah Tower District</h3><div class="ce-property-card__type">Apartment &bull; Freehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>1-2</strong> Beds</div><div class="ce-property-card__meta-item"><strong>80</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>2028</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;120,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+            <div class="ce-property-card">
+                <div class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80');"><span class="ce-property-card__badge">AlUla</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></div>
+                <div class="ce-property-card__body"><h3 class="ce-property-card__title">AlUla Heritage Resort</h3><div class="ce-property-card__type">Villa &bull; Leasehold</div><div class="ce-property-card__meta"><div class="ce-property-card__meta-item"><strong>2-3</strong> Beds</div><div class="ce-property-card__meta-item"><strong>180</strong> Sq.M.</div><div class="ce-property-card__meta-item"><strong>2028</strong></div></div><div class="ce-property-card__footer"><div class="ce-property-card__price">&pound;290,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: HOW IT WORKS
+     ============================================================ -->
+<div class="page-divider" id="how-it-works"><span>Page:</span> How It Works</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Your Investment Journey</div>
+        <h1>How It Works</h1>
+        <p>A clear, step-by-step guide to investing in Saudi Arabian property.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">The Process</span>
+            <h2>Five Simple Steps to Your Investment</h2>
+        </div>
+        <div class="ce-steps" style="max-width: 800px; margin: 0 auto;">
+            <div class="ce-step"><div class="ce-step__number"></div><div><h3>Discover the Opportunity</h3><p>Browse our curated selection or tell us what you're looking for.</p></div></div>
+            <div class="ce-step"><div class="ce-step__number"></div><div><h3>Speak to Our Team</h3><p>Schedule a consultation with our Saudi-based experts.</p></div></div>
+            <div class="ce-step"><div class="ce-step__number"></div><div><h3>Property Selection</h3><p>Get detailed information, renders, and financial projections.</p></div></div>
+            <div class="ce-step"><div class="ce-step__number"></div><div><h3>Reservation &amp; Legal Process</h3><p>We coordinate contracts, payments, and legal requirements.</p></div></div>
+            <div class="ce-step"><div class="ce-step__number"></div><div><h3>Completion &amp; Handover</h3><p>From construction updates to keys in hand.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Cost Estimator</span>
+            <h2>Investment Calculator</h2>
+        </div>
+        <div class="ce-calculator">
+            <h3>Estimate Your Investment Costs</h3>
+            <div class="ce-form" style="margin-bottom: var(--ce-space-lg);"><div class="ce-form__group"><label class="ce-form__label">Property Price (&pound;)</label><input type="number" class="ce-form__input" value="200000" id="calc-price-preview"></div></div>
+            <div class="ce-calculator__row"><span>Property Price</span><strong>&pound;200,000</strong></div>
+            <div class="ce-calculator__row"><span>Registration Fee (2.5%)</span><span>&pound;5,000</span></div>
+            <div class="ce-calculator__row"><span>VAT (5%)</span><span>&pound;10,000</span></div>
+            <div class="ce-calculator__row"><span>Agency Fee (2%)</span><span>&pound;4,000</span></div>
+            <div class="ce-calculator__row"><span>Estimated Total</span><span>&pound;219,000</span></div>
+            <div class="ce-calculator__disclaimer">This calculator provides estimates only and does not constitute financial advice.</div>
+            <div style="text-align: center; margin-top: var(--ce-space-lg);"><a href="#contact" class="ce-btn ce-btn--gold">Speak to Our Team</a></div>
+        </div>
+    </div>
+</section>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header"><span class="ce-label">Common Questions</span><h2>Frequently Asked Questions</h2></div>
+        <div class="ce-faq">
+            <div class="ce-faq__item"><button class="ce-faq__question">Can foreign nationals buy property in Saudi Arabia?</button><div class="ce-faq__answer"><p>Yes. Recent reforms allow international investors to purchase freehold property in designated zones.</p></div></div>
+            <div class="ce-faq__item"><button class="ce-faq__question">What is the minimum investment for the Golden Visa?</button><div class="ce-faq__answer"><p>The qualifying amount varies. Contact our team for the latest requirements.</p></div></div>
+            <div class="ce-faq__item"><button class="ce-faq__question">How do I pay from the UK?</button><div class="ce-faq__answer"><p>We guide you through international payment options and flexible instalment plans.</p></div></div>
+            <div class="ce-faq__item"><button class="ce-faq__question">Do I need to visit Saudi Arabia to buy?</button><div class="ce-faq__answer"><p>No. The entire process can be managed remotely. We also arrange property tours.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: BLOG / INSIGHTS
+     ============================================================ -->
+<div class="page-divider" id="blog"><span>Page:</span> Blog / Insights</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Knowledge Centre</div>
+        <h1>Insights &amp; Guides</h1>
+        <p>Expert analysis, investment guides, and market updates for Saudi property investors.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-blog-card"><div class="ce-blog-card__image" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=800&q=80');"></div><div class="ce-blog-card__body"><div class="ce-blog-card__category">Investment Guide</div><h3 class="ce-blog-card__title">5 Things UK Investors Need to Know About Saudi Property in 2026</h3><p class="ce-blog-card__excerpt">From regulatory changes to market trends, here's what every UK-based investor should understand before entering the Saudi market.</p><div class="ce-blog-card__date">March 20, 2026</div></div></div>
+            <div class="ce-blog-card"><div class="ce-blog-card__image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80');"></div><div class="ce-blog-card__body"><div class="ce-blog-card__category">Golden Visa</div><h3 class="ce-blog-card__title">Golden Visa Through Real Estate &mdash; A Step-by-Step Guide</h3><p class="ce-blog-card__excerpt">Everything you need to know about obtaining Saudi Premium Residency through qualifying property investment.</p><div class="ce-blog-card__date">March 15, 2026</div></div></div>
+            <div class="ce-blog-card"><div class="ce-blog-card__image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80');"></div><div class="ce-blog-card__body"><div class="ce-blog-card__category">Area Profile</div><h3 class="ce-blog-card__title">NEOM Investment Guide &mdash; What's Available and What to Expect</h3><p class="ce-blog-card__excerpt">A deep dive into NEOM's real estate offerings, from The Line to luxury coastal resorts.</p><div class="ce-blog-card__date">March 10, 2026</div></div></div>
+            <div class="ce-blog-card"><div class="ce-blog-card__image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80');"></div><div class="ce-blog-card__body"><div class="ce-blog-card__category">Market Update</div><h3 class="ce-blog-card__title">Understanding Off-Plan Property in Saudi Arabia</h3><p class="ce-blog-card__excerpt">Off-plan investment explained: risks, rewards, and how to protect your investment.</p><div class="ce-blog-card__date">March 5, 2026</div></div></div>
+            <div class="ce-blog-card"><div class="ce-blog-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80');"></div><div class="ce-blog-card__body"><div class="ce-blog-card__category">Area Profile</div><h3 class="ce-blog-card__title">Riyadh vs Jeddah &mdash; Where Should You Invest?</h3><p class="ce-blog-card__excerpt">Comparing Saudi Arabia's two largest cities across price, yield, lifestyle, and growth potential.</p><div class="ce-blog-card__date">March 1, 2026</div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: ABOUT
+     ============================================================ -->
+<div class="page-divider" id="about"><span>Page:</span> About Us</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content"><div class="ce-hero__label">Who We Are</div><h1>About Crowns Estates</h1><p>British expertise, Saudi roots. 20 years of trusted property guidance.</p></div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-two-col" style="align-items: center;">
+            <div>
+                <span class="ce-label">Our Story</span>
+                <h2 style="margin-top: 8px;">Two Decades of Local Expertise</h2>
+                <p>As British expats who have called Saudi Arabia home for over 20 years, we understand both the opportunities and the concerns that international investors face.</p>
+                <p>Crowns Estates was founded to bridge the gap between global investors and Saudi Arabia's rapidly growing real estate sector. We provide honest advice, source quality opportunities, and ensure every client feels confident.</p>
+            </div>
+            <div style="background: var(--ce-grey-mid); height: 450px; border-radius: var(--ce-border-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ce-grey-dark);">Team Photo Placeholder</div>
+        </div>
+    </div>
+</section>
+
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-section__header"><span class="ce-label">What We Stand For</span><h2>Our Core Values</h2></div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#9829;</div><h3>Trust</h3><p>Transparency, honesty, and integrity in every recommendation.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#9672;</div><h3>Local Knowledge</h3><p>20 years on the ground — we know the developers, regulations, and market.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#10004;</div><h3>Investor-First</h3><p>Every decision is designed around what's best for you.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-stats">
+            <div><div class="ce-stat__number">20+</div><div class="ce-stat__label">Years in Saudi Arabia</div></div>
+            <div><div class="ce-stat__number">200+</div><div class="ce-stat__label">Properties Sourced</div></div>
+            <div><div class="ce-stat__number">50+</div><div class="ce-stat__label">Happy Investors</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: CONTACT
+     ============================================================ -->
+<div class="page-divider" id="contact"><span>Page:</span> Contact</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content"><div class="ce-hero__label">Get in Touch</div><h1>Contact Us</h1><p>Ready to invest? Have a question? We're here to help.</p></div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-two-col">
+            <div>
+                <h2>Send Us a Message</h2>
+                <p>Fill out the form and our team will get back to you within 24 hours.</p>
+                <form class="ce-form" style="margin-top: var(--ce-space-lg);">
+                    <div class="ce-form__group"><label class="ce-form__label">Full Name *</label><input type="text" class="ce-form__input" placeholder="Your full name"></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Email Address *</label><input type="email" class="ce-form__input" placeholder="your@email.com"></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Phone Number</label><input type="tel" class="ce-form__input" placeholder="+44 7000 000000"></div>
+                    <div class="ce-form__group"><label class="ce-form__label">I'm Interested In</label><select class="ce-form__select"><option>Select an option</option><option>Buying Investment Property</option><option>Golden Visa / Premium Residency</option><option>A Specific Project</option><option>General Enquiry</option></select></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Message</label><textarea class="ce-form__textarea" placeholder="Tell us about your investment goals..."></textarea></div>
+                    <div class="ce-form__checkbox"><input type="checkbox"><label>I agree to the <a href="#">Privacy Policy</a> and consent to Crowns Estates processing my data to respond to my enquiry.</label></div>
+                    <button type="submit" class="ce-btn ce-btn--gold">Send Message</button>
+                </form>
+            </div>
+            <div>
+                <div style="background: var(--ce-grey-lightest); padding: var(--ce-space-xl); border-radius: var(--ce-border-radius-lg);">
+                    <h3>Contact Information</h3>
+                    <div style="margin-top: var(--ce-space-lg); display: flex; flex-direction: column; gap: var(--ce-space-lg);">
+                        <div><div class="ce-label" style="margin-bottom: 4px;">Email</div><a href="mailto:info@crownsestates.co.uk" style="font-size: 1.0625rem; font-weight: 500;">info@crownsestates.co.uk</a></div>
+                        <div><div class="ce-label" style="margin-bottom: 4px;">WhatsApp</div><a href="#" style="font-size: 1.0625rem; font-weight: 500;">Chat with us on WhatsApp</a></div>
+                        <div><div class="ce-label" style="margin-bottom: 4px;">Office</div><p style="font-size: 1.0625rem; margin-bottom: 0;">United Kingdom<br><span style="color: var(--ce-grey-dark); font-size: 0.875rem;">Registered in England & Wales</span></p></div>
+                    </div>
+                </div>
+                <div style="margin-top: var(--ce-space-lg); background: var(--ce-grey-light); height: 300px; border-radius: var(--ce-border-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ce-grey-dark);">Google Maps Placeholder</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     PAGE: RENTALS
+     ============================================================ -->
+<div class="page-divider" id="rentals"><span>Page:</span> Rentals</div>
+
+<div class="ce-hero ce-hero--small" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80'); margin-top: 0;">
+    <div class="ce-hero__content"><h1>Rental Properties</h1></div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-coming-soon">
+            <div class="ce-coming-soon__badge">Coming Soon</div>
+            <h2 style="margin-top: var(--ce-space-lg);">Rental Properties</h2>
+            <p class="ce-subtitle" style="max-width: 600px; margin: var(--ce-space-md) auto var(--ce-space-xl);">We're preparing a curated selection of rental properties across Saudi Arabia. Register your interest below.</p>
+            <form class="ce-form" style="max-width: 400px; margin: 0 auto;">
+                <div class="ce-form__group"><input type="text" class="ce-form__input" placeholder="Your name"></div>
+                <div class="ce-form__group"><input type="email" class="ce-form__input" placeholder="Your email address"></div>
+                <button type="submit" class="ce-btn ce-btn--gold" style="width: 100%;">Notify Me</button>
+            </form>
+            <div style="margin-top: var(--ce-space-xl);"><a href="#projects" class="ce-btn ce-btn--outline">Browse Investment Properties</a></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ce-footer">
+    <div class="ce-container">
+        <div class="ce-footer__grid">
+            <div class="ce-footer__brand"><a href="#home" class="ce-header__logo">CROWNS <span>ESTATES</span></a><p>Connecting UK and global investors with quality property opportunities in Saudi Arabia. 20 years of local expertise and trusted guidance.</p></div>
+            <div><h4>Quick Links</h4><div class="ce-footer__links"><a href="#projects">Projects</a><a href="#how-it-works">How It Works</a><a href="#blog">Insights</a><a href="#about">About Us</a><a href="#contact">Contact</a></div></div>
+            <div><h4>Contact</h4><div class="ce-footer__links"><a href="mailto:info@crownsestates.co.uk">info@crownsestates.co.uk</a><a href="#">WhatsApp</a></div></div>
+            <div><h4>Legal</h4><div class="ce-footer__links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Disclaimer</a><a href="#">Cookie Policy</a></div></div>
+        </div>
+        <div class="ce-footer__disclaimer">Crowns Estates is not regulated by the FCA. Information on this website does not constitute financial advice. Please seek independent advice before making investment decisions.</div>
+        <div class="ce-footer__bottom"><span>&copy; 2026 Crowns Estates. All rights reserved.</span><div class="ce-footer__legal"><span>A UK-registered company</span></div></div>
+    </div>
+</footer>
+
+<!-- WhatsApp Button -->
+<a href="#" class="ce-whatsapp" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.ce-faq__question').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasActive = item.classList.contains('active');
+        document.querySelectorAll('.ce-faq__item').forEach(i => i.classList.remove('active'));
+        if (!wasActive) item.classList.add('active');
+    });
+});
+
+// Filter tabs (visual only)
+document.querySelectorAll('.ce-filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.ce-filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    });
+});
+
+// Currency toggle (visual only)
+document.querySelectorAll('.ce-currency-toggle__option').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.ce-currency-toggle__option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+    });
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+});
+</script>
+
+</body>
+</html>
