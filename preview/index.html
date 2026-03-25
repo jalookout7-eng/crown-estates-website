@@ -50,6 +50,51 @@
         .ce-hero { margin-top: 116px; }
         .ce-404 { margin-top: 116px; }
 
+        /* Mobile menu overlay */
+        .ce-mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            background: rgba(10, 10, 10, 0.95);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+        .ce-mobile-menu.open {
+            display: flex;
+        }
+        .ce-mobile-menu a {
+            color: #FFFFFF;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        .ce-mobile-menu a:hover {
+            color: #C4973A;
+        }
+        .ce-mobile-menu__close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 8px;
+            line-height: 1;
+        }
+        .ce-mobile-menu__close:hover {
+            color: #C4973A;
+        }
+
         /* Mobile fixes for preview */
         @media (max-width: 768px) {
             .preview-nav {
@@ -130,11 +175,23 @@
             </div>
             <a href="#contact" class="ce-btn ce-btn--gold ce-btn--sm">Enquire</a>
         </div>
-        <button class="ce-hamburger" aria-label="Menu">
+        <button class="ce-hamburger" aria-label="Menu" onclick="document.querySelector('.ce-mobile-menu').classList.add('open')">
             <span></span><span></span><span></span>
         </button>
     </div>
 </header>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="ce-mobile-menu">
+    <button class="ce-mobile-menu__close" aria-label="Close menu">&times;</button>
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#blog">Insights</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#rentals">Rentals</a>
+</div>
 
 <!-- HERO -->
 <div class="ce-hero" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80');">
@@ -623,6 +680,16 @@ document.querySelectorAll('.ce-currency-toggle__option').forEach(opt => {
         document.querySelectorAll('.ce-currency-toggle__option').forEach(o => o.classList.remove('active'));
         opt.classList.add('active');
     });
+});
+
+// Mobile menu
+const mobileMenu = document.querySelector('.ce-mobile-menu');
+const mobileClose = document.querySelector('.ce-mobile-menu__close');
+if (mobileClose) {
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+}
+mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
 });
 
 // Smooth scroll for anchor links
