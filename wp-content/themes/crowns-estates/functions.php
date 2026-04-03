@@ -38,7 +38,7 @@ require get_template_directory() . '/inc/taxonomy-city.php';
 require get_template_directory() . '/inc/acf-fields-property.php';
 require get_template_directory() . '/inc/acf-fields-testimonial.php';
 require get_template_directory() . '/inc/acf-options.php';
-// require get_template_directory() . '/inc/currency-helpers.php';
+require get_template_directory() . '/inc/currency-helpers.php';
 // require get_template_directory() . '/inc/enquiry-handler.php';
 // require get_template_directory() . '/inc/schema-markup.php';
 // require get_template_directory() . '/inc/admin-dashboard.php';
