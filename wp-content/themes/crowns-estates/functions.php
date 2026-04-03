@@ -29,12 +29,17 @@ function ce_widgets_init() {
 }
 add_action('widgets_init', 'ce_widgets_init');
 
-// Enqueue assets
-function ce_enqueue_assets() {
-    wp_enqueue_style('ce-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap',
-        [], null
-    );
-    wp_enqueue_style('ce-style', get_stylesheet_uri(), ['ce-google-fonts'], wp_get_theme()->get('Version'));
-}
-add_action('wp_enqueue_scripts', 'ce_enqueue_assets');
+// Includes
+require get_template_directory() . '/inc/enqueue.php';
+// Uncomment as files are created:
+// require get_template_directory() . '/inc/cpt-property.php';
+// require get_template_directory() . '/inc/cpt-testimonial.php';
+// require get_template_directory() . '/inc/taxonomy-city.php';
+// require get_template_directory() . '/inc/acf-fields-property.php';
+// require get_template_directory() . '/inc/acf-fields-testimonial.php';
+// require get_template_directory() . '/inc/acf-options.php';
+// require get_template_directory() . '/inc/currency-helpers.php';
+// require get_template_directory() . '/inc/enquiry-handler.php';
+// require get_template_directory() . '/inc/schema-markup.php';
+// require get_template_directory() . '/inc/admin-dashboard.php';
+// require get_template_directory() . '/inc/ga4-tracking.php';
