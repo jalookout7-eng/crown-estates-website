@@ -92,6 +92,42 @@ All values are CSS custom properties — one change updates the entire site. Tok
 
 **Vibe:** Easy / Informative / Minimalist. No clutter. Generous whitespace. Gold used sparingly.
 
+### 3D Immersive Design Language
+
+The site uses a **full immersive 3D experience** across multiple pages, inspired by [districtio.com](https://districtio.com/). 3D elements are not decorative — they are the primary visual storytelling medium.
+
+**Technology:**
+- **Three.js + WebGL** — browser-based 3D rendering
+- **GSAP + ScrollTrigger** — scroll-driven animations bound to camera/scene
+- **Lenis** — smooth scrolling library for buttery scroll feel
+- **GLTF/GLB models** — 3D building/property models (created in Spline or Blender)
+
+**3D elements per page:**
+
+| Page | 3D Treatment |
+|------|-------------|
+| **Home** | Hero: 3D Saudi skyline/luxury property model. Camera orbits on scroll, transitions from aerial to ground level. Gold particle effects. Scroll-driven reveal of sections (trust bar, properties, testimonials emerge from depth). |
+| **Projects** | 3D city map with pin markers for property locations. Click a pin → zooms into that city cluster. Property cards animate in with depth/parallax as user scrolls the grid. |
+| **Single Property** | Interactive 3D building model (if available) — user can rotate/zoom. Scroll-driven walkthrough: exterior → floor plan → unit detail. Falls back to gallery carousel if no 3D model. |
+| **How It Works** | 5-step journey as a scroll-driven 3D path. Camera follows a golden line through floating step cards in 3D space. Calculator card materialises with depth animation. |
+| **About Us** | Parallax depth layers: team story text floats at different Z-depths. Stats bar animates with 3D counter reveals. Subtle gold particle atmosphere. |
+| **Contact** | Minimal 3D — floating form card with subtle depth, 3D globe or map pin for location. Focus is on the form, not distraction. |
+
+**3D Model Pipeline:**
+1. Architectural renders/property images provided by client
+2. 3D models created in **Spline** (rapid prototyping, exports GLTF) or **Blender** (complex models)
+3. Optimised for web (compressed GLTF/GLB, LOD where needed)
+4. Loaded asynchronously — page content is readable before 3D assets finish loading
+5. Graceful fallback: if WebGL is unsupported or device is low-power, static images with CSS parallax replace 3D scenes
+
+**Performance considerations:**
+- 3D assets loaded lazily (only when section enters viewport)
+- Model compression via Draco/meshopt
+- Texture atlas where possible to reduce draw calls
+- Mobile: simplified scenes (fewer particles, lower-poly models, reduced draw distance)
+- Preloader with branded loading animation while 3D scene initialises
+- Core Web Vitals: 3D canvas does NOT block LCP — text/images render first, 3D layers in after
+
 ---
 
 ## 4. Site Structure — Phase 1
@@ -474,6 +510,10 @@ Content entered by admin via WordPress editor using default `page.php` template.
 | Theme | Custom (Underscores `_s` starter) |
 | Fields | Advanced Custom Fields (ACF) |
 | Front-end JS | Vanilla JavaScript (no jQuery dependency) |
+| 3D Rendering | Three.js + WebGL |
+| 3D Animation | GSAP + ScrollTrigger |
+| Smooth Scroll | Lenis |
+| 3D Models | GLTF/GLB (created in Spline/Blender, compressed via Draco) |
 | AI Chatbot | Claude API (Haiku 4.5) via custom REST endpoint |
 | Design | Figma (component-based design system) |
 | Analytics | GA4 via GTM |
@@ -556,6 +596,10 @@ This spec is built for extensibility:
 10. **Developer badges are admin-assigned** — no automated verification system
 11. **GA4 via GTM** — allows flexible event tracking without code changes
 12. **R2 handles client comms** — dev team focuses on building, R2 manages expectations
+13. **Full immersive 3D via Three.js** — not decorative; 3D is the primary visual language across all pages
+14. **GSAP ScrollTrigger for scroll-driven animation** — camera movements, section reveals, and transitions tied to scroll
+15. **3D graceful fallback** — static images + CSS parallax if WebGL unsupported or low-power device
+16. **3D assets lazy-loaded** — page content readable before 3D finishes loading, no LCP penalty
 
 ---
 
@@ -620,7 +664,20 @@ crown-estates-website/
     │   ├── city-filter.js
     │   ├── faq-accordion.js
     │   ├── ai-chat.js
-    │   └── admin-dashboard.js
+    │   ├── admin-dashboard.js
+    │   └── 3d/
+    │       ├── scene-manager.js          # Three.js scene setup, renderer, camera, resize
+    │       ├── scroll-controller.js      # GSAP ScrollTrigger + Lenis integration
+    │       ├── hero-scene.js             # Homepage 3D skyline/property scene
+    │       ├── projects-map.js           # Projects page 3D city map with pins
+    │       ├── property-viewer.js        # Single property interactive 3D model viewer
+    │       ├── journey-scene.js          # How It Works scroll-driven 3D path
+    │       ├── particles.js              # Gold particle system (reusable)
+    │       └── fallback.js               # WebGL detection + static fallback loader
+    ├── models/
+    │   ├── skyline.glb                   # Homepage hero 3D model
+    │   ├── city-map.glb                  # Projects page city map
+    │   └── properties/                   # Per-property 3D models (optional)
     ├── img/
     │   └── placeholder-property.jpg
     └── sample-content/
