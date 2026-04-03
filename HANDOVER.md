@@ -19,7 +19,7 @@ A WordPress website for **Crowns Estates** — a UK-registered real estate agenc
 ### Delivery Model
 
 - **R2 Design** — client-facing agency. Handles client communication, weekly Friday updates, revision rounds, content collection.
-- **jalookout7-eng** — builds everything (Figma designs, WordPress theme, backend, 3D immersive front-end, AI chatbot) and hands over all deliverables to R2.
+- **jalookout7-eng** — builds everything (Figma designs, WordPress theme, backend, 3D immersive front-end) and hands over all deliverables to R2.
 - **Client receives:** Figma source files (upon final payment), full WordPress codebase, admin access, 30-day post-launch warranty.
 - **Timeline:** 8 weeks. Content from client by end of Week 2 (branding/data) and Week 4 (copy).
 
@@ -83,7 +83,6 @@ R2 Design issued a "Scope Clarification & Project Agreement" to the client defin
 | Feature | Details |
 |---------|---------|
 | 3D immersive experience | Full Three.js + WebGL + GSAP ScrollTrigger across all pages (inspired by districtio.com) |
-| AI Assistant chatbot | Claude API (Haiku 4.5) — RAG over site content + documents + enquiry collection |
 | Custom admin dashboard | Branded backend with stat cards, clean sidebar (griyakita reference) |
 
 ### Features Dropped (from v1)
@@ -134,12 +133,6 @@ R2 Design issued a "Scope Clarification & Project Agreement" to the client defin
   - [ ] 3D model pipeline (Spline/Blender → GLTF/GLB → compressed)
   - [ ] Mobile-optimised simplified scenes
   - [ ] Branded preloader animation
-- [ ] AI Assistant chatbot (Claude API)
-  - [ ] Chat widget (front-end, alongside WhatsApp button)
-  - [ ] REST endpoint (`/wp-json/ce/v1/chat`)
-  - [ ] RAG context: property data, How It Works, FAQ, About, brochures
-  - [ ] Conversational enquiry capture (name, email, phone → DB)
-  - [ ] Rate limiting + admin toggle
 - [ ] Custom admin dashboard
   - [ ] Stat cards (properties, enquiries, users, property value)
   - [ ] Sparkline charts (Chart.js)
@@ -186,7 +179,6 @@ All values are CSS custom properties in `style.css` AND Figma variables — one 
 - **Animation:** GSAP + ScrollTrigger
 - **Smooth Scroll:** Lenis
 - **3D Models:** GLTF/GLB (Spline/Blender, Draco compressed)
-- **AI Chatbot:** Claude API (Haiku 4.5) via custom REST endpoint
 - **Design:** Figma (component-based design system)
 - **Analytics:** GA4 via GTM
 - **SEO:** Yoast SEO
@@ -210,8 +202,7 @@ All values are CSS custom properties in `style.css` AND Figma variables — one 
 9. **DB table for enquiries uses `after_switch_theme` hook** — not `register_activation_hook` (plugins only)
 10. **Blog in Phase 1** — critical for SEO
 11. **`ce_city` taxonomy shared** between properties AND testimonials
-12. **Claude Haiku 4.5 for chatbot** — fast, cost-effective; built as demo/preview (may not ship)
-13. **Gated brochures are per-property toggle** — not global
+12. **Gated brochures are per-property toggle** — not global
 14. **Developer badges are admin-assigned** — no automated verification
 15. **GA4 via GTM** — flexible event tracking without code changes
 16. **R2 handles client comms** — dev team focuses on building
@@ -292,7 +283,7 @@ Then read:
 - **Competitors referenced:** saudipropertyinvestment.com, makan360.co.uk, labreezere.com
 - **3D reference:** districtio.com (full immersive 3D experience)
 - **Features requested:** WhatsApp button, Register Interest form, city-based filtering
-- **Phase 2:** Rentals, visa services
+- **Phase 2:** Rentals, visa services, AI chatbot
 - **Contact email:** info@crownsestates.co.uk
 - **Domain:** www.crownsestates.co.uk (registered)
 
@@ -337,9 +328,11 @@ Then read:
 - Chose Approach B: R2 scope as baseline + keep high-value bonus features
 - Wrote v2 design spec (`2026-04-02-crowns-estates-website-design-v2.md`) incorporating:
   - All R2 committed features (developer badges, gated brochures, GA4, WhatsApp tracking, Figma)
-  - Bonus: investment calculator, multi-currency, testimonials, custom admin dashboard, AI chatbot (Claude API)
+  - Bonus: investment calculator, multi-currency, testimonials, custom admin dashboard
   - Full immersive 3D experience across all pages (Three.js + GSAP + Lenis, inspired by districtio.com)
 - Dropped: newsletter subscribers, tour requests management, branded login page
-- Researched Figma MCP server — official integration available (setup pending)
+- AI chatbot deferred to Phase 2 — focus on full website build first
+- Researched Figma MCP server — official integration available
+- Connected Figma MCP server for bidirectional design/code workflow
 - Cloned repo to new machine (`/Users/farhanraiss/crown-estates-website`)
-- **Status:** v2 spec approved. Next: write v2 implementation plan, set up Figma MCP, begin building.
+- **Status:** v2 spec approved. Next: write v2 implementation plan, begin building.

@@ -65,7 +65,6 @@ All designs are produced as a **component-based Figma design system** before dev
 | CTA Banner | `template-parts/cta-banner.php` |
 | Register Interest Modal | `template-parts/modal-register-interest.php` |
 | WhatsApp Button | `template-parts/whatsapp-button.php` |
-| AI Chat Widget | `template-parts/ai-chat-widget.php` |
 | Developer Badge | `template-parts/developer-badge.php` |
 | Brochure Gate | `template-parts/brochure-gate.php` |
 
@@ -153,7 +152,6 @@ The site uses a **full immersive 3D experience** across multiple pages, inspired
 | Multi-Currency Toggle | GBP/SAR/USD price switching (client-side, cache-safe) |
 | Testimonials | Curated client reviews with Google Reviews links |
 | Custom Admin Dashboard | Branded backend with stat cards, clean sidebar |
-| AI Assistant Chatbot | Claude API-powered chat widget alongside WhatsApp |
 
 ---
 
@@ -344,55 +342,7 @@ All property prices support multi-currency display.
 
 ---
 
-## 11. AI Assistant Chatbot (Bonus)
-
-A Claude API-powered conversational chatbot displayed as a chat widget alongside the WhatsApp button (bottom-right corner).
-
-### Capabilities
-- Answers questions about properties, investment process, Golden Visa, fees, cities
-- Pulls context from: property listings (ACF data), How It Works content, FAQ, About Us, uploaded brochures/documents
-- Can collect enquiry details conversationally (name, email, phone) and save to `ce_enquiries` DB table
-- Graceful handoff: "For detailed advice, speak to our team directly" + offers to open Register Interest form or WhatsApp
-
-### Architecture
-
-```
-[Chat Widget (front-end)]
-    ↓ fetch POST
-[/wp-json/ce/v1/chat (WP REST endpoint)]
-    ↓ builds context
-[Claude API (Messages API)]
-    ↓ response
-[Chat Widget displays reply]
-```
-
-- **Front-end:** Floating chat icon (bottom-right, next to WhatsApp). Click to open chat panel. Conversation persisted in `sessionStorage`.
-- **Backend:** Custom REST endpoint receives user message + conversation history. Builds system prompt with:
-  - Site knowledge (property data, How It Works, FAQ, About — queried from WordPress)
-  - Uploaded document content (brochures, guides — indexed and stored)
-  - Instructions: be helpful, accurate, suggest contacting the team for specifics, collect enquiry details when appropriate
-- **API:** Claude Messages API via Anthropic PHP/JS SDK. Model: `claude-haiku-4-5-20251001` (fast, cost-effective for chat)
-- **Enquiry capture:** When the chatbot collects name + email + phone, it saves to `ce_enquiries` with source = "ai_chatbot"
-- **Rate limiting:** Basic throttle per session to prevent abuse
-
-### Data Flow for RAG Context
-1. On each chat request, endpoint queries relevant WordPress data:
-   - All published `ce_property` posts (title, city, price, status, short description)
-   - `ce_testimonial` excerpts
-   - Page content from How It Works, About, FAQ
-2. Brochure/document content pre-indexed as text chunks stored in a custom DB table (`ce_chat_documents`)
-3. System prompt assembled with relevant context + user conversation history
-4. Sent to Claude API, response streamed back to widget
-
-### Cost Control
-- Use `claude-haiku-4-5-20251001` for speed and low cost
-- Limit context window per request (most recent 10 messages + relevant site data)
-- Session-based rate limit (e.g., 30 messages per session)
-- Admin toggle in ACF options to enable/disable chatbot
-
----
-
-## 12. Custom Admin Dashboard (Bonus)
+## 11. Custom Admin Dashboard (Bonus)
 
 Branded WordPress admin panel matching the griyakita reference design. Clean, modern, client-friendly.
 
@@ -429,7 +379,7 @@ Remove clutter: Comments, Tools, and unused default menu items hidden.
 
 ---
 
-## 13. Analytics & Tracking
+## 12. Analytics & Tracking
 
 ### Google Analytics 4 (GA4)
 - Full GA4 property setup
@@ -444,9 +394,6 @@ Remove clutter: Comments, Tools, and unused default menu items hidden.
 | Form submission | Register Interest form submitted | `enquiry_submit` |
 | Contact form | Contact page form submitted | `contact_submit` |
 | Brochure download | Brochure downloaded (gated or direct) | `brochure_download` |
-| AI chat started | User opens chat widget | `ai_chat_open` |
-| AI chat enquiry | Chatbot collects user contact details | `ai_chat_enquiry` |
-
 ### Google Search Console
 - Site verified and submitted
 - XML sitemap generated (via Yoast SEO) and submitted
@@ -454,7 +401,7 @@ Remove clutter: Comments, Tools, and unused default menu items hidden.
 
 ---
 
-## 14. SEO Foundation
+## 13. SEO Foundation
 
 | Element | Implementation |
 |---|---|
@@ -467,17 +414,16 @@ Remove clutter: Comments, Tools, and unused default menu items hidden.
 
 ---
 
-## 15. Persistent Enquiry Features
+## 14. Persistent Enquiry Features
 
 - **Sticky WhatsApp button** — bottom-right, visible on all pages, GA4 tracked
-- **AI Chat widget** — bottom-right (next to WhatsApp), Claude API powered
 - **Register Interest modal** — triggered by CTAs. Fields: Name, Email, Phone, Property of Interest (optional), Message, GDPR consent. Submits to REST endpoint, stored in DB, GA4 tracked.
 - **Auto-responder email** — "Thank you for your interest. Our team will be in touch within 24 hours."
 - **Gated brochure download** — optional per-property email capture before PDF delivery
 
 ---
 
-## 16. Regulatory & Legal
+## 15. Regulatory & Legal
 
 ### Required Pages
 | Page | Slug |
@@ -498,11 +444,10 @@ Content entered by admin via WordPress editor using default `page.php` template.
 - All forms display consent checkbox with link to Privacy Policy
 - Form submissions stored in WordPress database for data access/deletion requests
 - Data retention policy documented in Privacy Policy
-- AI chatbot: conversation data not persisted beyond session unless user provides contact details
 
 ---
 
-## 17. Tech Stack
+## 16. Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -514,7 +459,6 @@ Content entered by admin via WordPress editor using default `page.php` template.
 | 3D Animation | GSAP + ScrollTrigger |
 | Smooth Scroll | Lenis |
 | 3D Models | GLTF/GLB (created in Spline/Blender, compressed via Draco) |
-| AI Chatbot | Claude API (Haiku 4.5) via custom REST endpoint |
 | Design | Figma (component-based design system) |
 | Analytics | GA4 via GTM |
 | SEO | Yoast SEO |
@@ -525,7 +469,7 @@ Content entered by admin via WordPress editor using default `page.php` template.
 
 ---
 
-## 18. Plugins Required
+## 17. Plugins Required
 
 | Plugin | Purpose |
 |---|---|
@@ -540,7 +484,7 @@ Minimal plugin footprint. No page builders, no bloat.
 
 ---
 
-## 19. Content Requirements (from Client)
+## 18. Content Requirements (from Client)
 
 R2 Design collects from client, dev team formats for web:
 
@@ -559,7 +503,7 @@ Dev team will:
 
 ---
 
-## 20. Flexibility & Phase 2
+## 19. Flexibility & Phase 2
 
 This spec is built for extensibility:
 
@@ -568,7 +512,6 @@ This spec is built for extensibility:
 - **Pages** — any page can be added via Figma components → WordPress templates
 - **Cities** — taxonomy, no hardcoding
 - **Calculator rates** — admin-editable via ACF options
-- **AI chatbot** — admin toggle to enable/disable
 
 ### Phase 2 (out of scope)
 - Live rental listings
@@ -577,12 +520,13 @@ This spec is built for extensibility:
 - Payment processing
 - Arabic language version
 - Automated Google Reviews API pull
+- AI Assistant chatbot (Claude API — deferred, build when site is complete)
 - Newsletter subscriber system
 - Tour requests management
 
 ---
 
-## 21. Key Decisions
+## 20. Key Decisions
 
 1. **Custom theme over page builder** — client only needs to update listings, not redesign pages
 2. **Figma as living design system** — client can design new sections, dev team builds them
@@ -591,8 +535,7 @@ This spec is built for extensibility:
 5. **DB table for enquiries uses `after_switch_theme` hook** — not `register_activation_hook`
 6. **`ce_city` taxonomy shared** between properties AND testimonials
 7. **Blog in Phase 1** — critical for SEO, every competitor has one
-8. **Claude Haiku 4.5 for chatbot** — fast, cost-effective, good enough for FAQ/property questions
-9. **Gated brochures are per-property toggle** — not a global setting
+8. **Gated brochures are per-property toggle** — not a global setting
 10. **Developer badges are admin-assigned** — no automated verification system
 11. **GA4 via GTM** — allows flexible event tracking without code changes
 12. **R2 handles client comms** — dev team focuses on building, R2 manages expectations
@@ -644,8 +587,7 @@ crown-estates-website/
     │   ├── currency-helpers.php
     │   ├── enquiry-handler.php
     │   ├── schema-markup.php
-    │   ├── admin-dashboard.php
-    │   └── ai-chatbot.php
+    │   └── admin-dashboard.php
     ├── template-parts/
     │   ├── property-card.php
     │   ├── testimonial-card.php
@@ -654,7 +596,6 @@ crown-estates-website/
     │   ├── cta-banner.php
     │   ├── modal-register-interest.php
     │   ├── whatsapp-button.php
-    │   ├── ai-chat-widget.php
     │   ├── developer-badge.php
     │   └── brochure-gate.php
     ├── js/
@@ -663,7 +604,6 @@ crown-estates-website/
     │   ├── modal.js
     │   ├── city-filter.js
     │   ├── faq-accordion.js
-    │   ├── ai-chat.js
     │   ├── admin-dashboard.js
     │   └── 3d/
     │       ├── scene-manager.js          # Three.js scene setup, renderer, camera, resize
