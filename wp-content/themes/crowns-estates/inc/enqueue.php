@@ -44,3 +44,14 @@ function ce_enqueue_assets() {
     }
 }
 add_action('wp_enqueue_scripts', 'ce_enqueue_assets');
+
+/**
+ * Admin scripts — dashboard only.
+ */
+function ce_admin_enqueue($hook) {
+    if ($hook !== 'index.php') return;
+
+    wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js', [], '4.0', true);
+    wp_enqueue_script('ce-admin-dashboard', get_template_directory_uri() . '/js/admin-dashboard.js', ['chartjs'], '1.0', true);
+}
+add_action('admin_enqueue_scripts', 'ce_admin_enqueue');

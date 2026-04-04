@@ -41,5 +41,5 @@ require get_template_directory() . '/inc/acf-options.php';
 require get_template_directory() . '/inc/currency-helpers.php';
 require get_template_directory() . '/inc/enquiry-handler.php';
 require get_template_directory() . '/inc/schema-markup.php';
-// require get_template_directory() . '/inc/admin-dashboard.php';
+require get_template_directory() . '/inc/admin-dashboard.php';
 require get_template_directory() . '/inc/ga4-tracking.php';
