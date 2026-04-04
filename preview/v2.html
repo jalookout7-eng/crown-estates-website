@@ -664,49 +664,587 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- ADMIN DASHBOARD -->
+<!-- WORDPRESS BACKEND — FULL PREVIEW -->
 <!-- ============================================================ -->
-<div class="page-divider" id="admin">CUSTOM ADMIN DASHBOARD<small>inc/admin-dashboard.php — Branded WP Backend</small></div>
+<div class="page-divider" id="admin">WORDPRESS BACKEND<small>Full admin panel preview — Dashboard, Property Editor, Options, Enquiries</small></div>
 
-<section class="ce-section">
-    <div class="ce-container">
-        <div class="ce-grid" style="display: grid; grid-template-columns: 220px 1fr; gap: 24px;">
-            <!-- Sidebar preview -->
-            <div class="ce-admin-sidebar-preview">
-                <div style="padding: 12px; font-weight: 700; font-size: 14px; color: #C4973A; margin-bottom: 12px;">Crowns Estates</div>
-                <a href="#" class="active">&#128200; Dashboard</a>
-                <a href="#">&#127970; Properties</a>
+<!-- Admin tab navigation -->
+<div style="background: #23282d; padding: 0 24px; display: flex; gap: 0; font-family: 'Inter', sans-serif; font-size: 13px; position: sticky; top: 36px; z-index: 999;">
+    <button class="admin-tab active" data-tab="dashboard" style="background: #0073aa; color: white; border: none; padding: 12px 20px; cursor: pointer; font-weight: 600;">Dashboard</button>
+    <button class="admin-tab" data-tab="property-editor" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">Property Editor</button>
+    <button class="admin-tab" data-tab="property-list" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">All Properties</button>
+    <button class="admin-tab" data-tab="site-settings" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">Site Settings</button>
+    <button class="admin-tab" data-tab="exchange-rates" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">Exchange Rates</button>
+    <button class="admin-tab" data-tab="calculator-settings" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">Calculator</button>
+    <button class="admin-tab" data-tab="enquiries" style="background: transparent; color: #eee; border: none; padding: 12px 20px; cursor: pointer;">Enquiries</button>
+</div>
+
+<!-- All admin panels share this wrapper -->
+<section style="background: #f0f0f1; min-height: 600px; padding: 0;">
+    <div style="display: grid; grid-template-columns: 220px 1fr; min-height: 600px;">
+
+        <!-- WP Admin Sidebar -->
+        <div class="ce-admin-sidebar-preview" style="border-radius: 0; min-height: 600px;">
+            <div style="padding: 16px 12px 8px; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 28px; height: 28px; background: #C4973A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">CE</div>
+                <span style="font-weight: 700; font-size: 14px; color: #C4973A;">Crowns Estates</span>
+            </div>
+            <div style="margin-top: 8px;">
+                <a href="#" class="active" onclick="switchAdminTab('dashboard'); return false;">&#128200; Dashboard</a>
+                <a href="#" onclick="switchAdminTab('property-list'); return false;">&#127970; Properties</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;" onclick="switchAdminTab('property-list'); return false;">All Properties</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;" onclick="switchAdminTab('property-editor'); return false;">Add New</a>
                 <a href="#">&#128172; Testimonials</a>
                 <a href="#">&#128221; Blog Posts</a>
                 <a href="#">&#128230; Media</a>
                 <a href="#">&#128100; Users</a>
-                <a href="#">&#9881; Site Settings</a>
-                <a href="#" style="margin-left: 16px; font-size: 12px;">Exchange Rates</a>
-                <a href="#" style="margin-left: 16px; font-size: 12px;">Calculator</a>
-                <a href="#" style="margin-left: 16px; font-size: 12px;">Enquiries</a>
-            </div>
-            <!-- Main area -->
-            <div class="ce-admin-preview">
-                <h2 style="margin-bottom: 16px;">Dashboard — Crowns Estates Overview</h2>
-                <div class="ce-admin-stats">
-                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">12</div><div class="ce-admin-stat__label">Total Properties</div></div>
-                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">47</div><div class="ce-admin-stat__label">Enquiries</div></div>
-                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">3</div><div class="ce-admin-stat__label">Users</div></div>
-                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">SAR 18,500,000</div><div class="ce-admin-stat__label">Total Property Value</div></div>
-                </div>
-                <div style="margin-top: 24px; padding: 16px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
-                    <h3 style="margin-bottom: 12px;">Recent Enquiries</h3>
-                    <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
-                        <tr style="border-bottom: 1px solid #eee; font-weight: 600;"><td style="padding: 8px;">Name</td><td>Email</td><td>Property</td><td>Source</td><td>Date</td></tr>
-                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">James Mitchell</td><td>j.mitchell@email.com</td><td>ROSHN Sedra</td><td>property_page</td><td>4 Apr 2026</td></tr>
-                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Sarah Foster</td><td>sarah.f@email.com</td><td>—</td><td>register_interest</td><td>3 Apr 2026</td></tr>
-                        <tr><td style="padding: 8px;">Ahmed Khan</td><td>ahmed.k@email.com</td><td>Dar Global AIDA</td><td>brochure_download</td><td>2 Apr 2026</td></tr>
-                    </table>
-                </div>
-                <div style="margin-top: 16px; text-align: center; color: #999; font-size: 12px;">Crowns Estates Admin Panel — Powered by WordPress</div>
+                <a href="#" onclick="switchAdminTab('site-settings'); return false;">&#9881; Site Settings</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;" onclick="switchAdminTab('exchange-rates'); return false;">Exchange Rates</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;" onclick="switchAdminTab('calculator-settings'); return false;">Calculator</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;" onclick="switchAdminTab('enquiries'); return false;">Enquiries</a>
             </div>
         </div>
-    </div>
+
+        <!-- Main Admin Content Area -->
+        <div style="padding: 20px 24px;">
+
+            <!-- ===== TAB: DASHBOARD ===== -->
+            <div class="admin-panel" id="panel-dashboard">
+                <!-- WP Admin Bar -->
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <h1 style="font-size: 23px; font-weight: 400; margin-bottom: 20px; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Dashboard</h1>
+
+                <div style="background: white; border: 1px solid #c3c4c7; border-left: 4px solid #C4973A; padding: 16px 20px; margin-bottom: 20px; border-radius: 0 4px 4px 0;">
+                    <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #1d2327;">Crowns Estates Overview</h2>
+                    <div class="ce-admin-stats">
+                        <div class="ce-admin-stat">
+                            <div class="ce-admin-stat__value">12</div>
+                            <div class="ce-admin-stat__label">Total Properties</div>
+                            <canvas class="ce-admin-sparkline" width="200" height="40" style="margin-top: 8px;"></canvas>
+                        </div>
+                        <div class="ce-admin-stat">
+                            <div class="ce-admin-stat__value">47</div>
+                            <div class="ce-admin-stat__label">Enquiries</div>
+                            <canvas class="ce-admin-sparkline" width="200" height="40" style="margin-top: 8px;"></canvas>
+                        </div>
+                        <div class="ce-admin-stat">
+                            <div class="ce-admin-stat__value">3</div>
+                            <div class="ce-admin-stat__label">Users</div>
+                        </div>
+                        <div class="ce-admin-stat">
+                            <div class="ce-admin-stat__value">SAR 18,500,000</div>
+                            <div class="ce-admin-stat__label">Total Property Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Enquiries Widget -->
+                <div style="background: white; border: 1px solid #c3c4c7; padding: 0; margin-bottom: 20px;">
+                    <div style="padding: 8px 12px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;"><h3 style="font-size: 14px; font-weight: 600; margin: 0;">Recent Enquiries</h3></div>
+                    <div style="padding: 0;">
+                        <table style="width: 100%; font-size: 13px; border-collapse: collapse; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                            <thead><tr style="border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
+                                <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Name</th>
+                                <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Email</th>
+                                <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Property</th>
+                                <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Source</th>
+                                <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Date</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #f0f0f1;"><td style="padding: 8px 12px;"><strong>James Mitchell</strong></td><td style="padding: 8px 12px;">j.mitchell@email.com</td><td style="padding: 8px 12px;">ROSHN Sedra Villas</td><td style="padding: 8px 12px;"><span style="background: #e8f4fd; color: #0073aa; padding: 2px 8px; border-radius: 3px; font-size: 11px;">property_page</span></td><td style="padding: 8px 12px;">4 Apr 2026</td></tr>
+                                <tr style="border-bottom: 1px solid #f0f0f1;"><td style="padding: 8px 12px;"><strong>Sarah Foster</strong></td><td style="padding: 8px 12px;">sarah.f@email.com</td><td style="padding: 8px 12px;">—</td><td style="padding: 8px 12px;"><span style="background: #f0e6ff; color: #7c3aed; padding: 2px 8px; border-radius: 3px; font-size: 11px;">register_interest</span></td><td style="padding: 8px 12px;">3 Apr 2026</td></tr>
+                                <tr style="border-bottom: 1px solid #f0f0f1;"><td style="padding: 8px 12px;"><strong>Ahmed Khan</strong></td><td style="padding: 8px 12px;">ahmed.k@email.com</td><td style="padding: 8px 12px;">Dar Global AIDA</td><td style="padding: 8px 12px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 3px; font-size: 11px;">brochure_download</span></td><td style="padding: 8px 12px;">2 Apr 2026</td></tr>
+                                <tr style="border-bottom: 1px solid #f0f0f1;"><td style="padding: 8px 12px;"><strong>Emily Roberts</strong></td><td style="padding: 8px 12px;">emily.r@gmail.com</td><td style="padding: 8px 12px;">Jeddah Tower Residences</td><td style="padding: 8px 12px;"><span style="background: #e8f4fd; color: #0073aa; padding: 2px 8px; border-radius: 3px; font-size: 11px;">contact_form</span></td><td style="padding: 8px 12px;">1 Apr 2026</td></tr>
+                                <tr><td style="padding: 8px 12px;"><strong>Omar Al-Fayed</strong></td><td style="padding: 8px 12px;">omar.af@email.com</td><td style="padding: 8px 12px;">NEOM Marina</td><td style="padding: 8px 12px;"><span style="background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 3px; font-size: 11px;">whatsapp</span></td><td style="padding: 8px 12px;">31 Mar 2026</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align: center; color: #999; font-size: 12px; padding: 12px 0;">Crowns Estates Admin Panel &mdash; Powered by WordPress</div>
+            </div>
+
+            <!-- ===== TAB: PROPERTY EDITOR (ACF Fields) ===== -->
+            <div class="admin-panel" id="panel-property-editor" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h1 style="font-size: 23px; font-weight: 400; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Add New Property</h1>
+                    <button style="background: #2271b1; color: white; border: none; padding: 6px 16px; border-radius: 3px; cursor: pointer; font-size: 13px;">Publish</button>
+                </div>
+
+                <!-- Title -->
+                <div style="background: white; border: 1px solid #c3c4c7; padding: 12px; margin-bottom: 16px;">
+                    <input type="text" value="ROSHN Sedra — Premium Villas in Riyadh" style="width: 100%; border: 1px solid #ddd; padding: 8px 12px; font-size: 18px; font-family: inherit; border-radius: 3px;">
+                </div>
+
+                <!-- ACF Property Details Field Group -->
+                <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                    <div style="padding: 10px 16px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
+                        <h2 style="font-size: 14px; font-weight: 600; margin: 0;">Property Details</h2>
+                        <span style="font-size: 11px; color: #999; float: right; margin-top: -16px;">ACF Field Group &middot; 16 fields</span>
+                    </div>
+                    <div style="padding: 16px;">
+                        <!-- Row: Developer + Badge -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Developer</label>
+                                <input type="text" value="ROSHN" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                                <p style="font-size: 11px; color: #999; margin-top: 2px;">e.g. ROSHN, Dar Global</p>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Developer Badge</label>
+                                <select style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; background: white;">
+                                    <option>None</option>
+                                    <option selected>Verified Developer</option>
+                                    <option>Track Record</option>
+                                    <option>Premium Partner</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Row: Price + Currency + Type -->
+                        <div style="display: grid; grid-template-columns: 1fr 120px 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Price From</label>
+                                <input type="number" value="1850000" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Currency</label>
+                                <select style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; background: white;">
+                                    <option selected>SAR</option>
+                                    <option>GBP</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Property Type</label>
+                                <select style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; background: white;">
+                                    <option>Apartment</option>
+                                    <option selected>Villa</option>
+                                    <option>Commercial</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Row: Status + Completion + Bedrooms + Size -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 100px 120px; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Status</label>
+                                <select style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; background: white;">
+                                    <option selected>Off-Plan</option>
+                                    <option>Under Construction</option>
+                                    <option>Ready</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Completion Date</label>
+                                <input type="text" value="June 2027" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Bedrooms</label>
+                                <input type="text" value="3-5" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Size (Sq.M.)</label>
+                                <input type="number" value="280" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                        </div>
+                        <!-- Is Freehold toggle -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1d2327; cursor: pointer;">
+                                <div style="width: 40px; height: 22px; background: #C4973A; border-radius: 11px; position: relative; flex-shrink: 0;">
+                                    <div style="width: 18px; height: 18px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px;"></div>
+                                </div>
+                                Is Freehold
+                            </label>
+                        </div>
+                        <!-- Short Description -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Short Description</label>
+                            <textarea rows="3" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; font-family: inherit; resize: vertical;">Premium gated community villas by ROSHN in North Riyadh. Smart home features, landscaped gardens, community amenities.</textarea>
+                            <p style="font-size: 11px; color: #999; margin-top: 2px;">Used on listing cards.</p>
+                        </div>
+                        <!-- Full Description (WYSIWYG placeholder) -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Full Description</label>
+                            <div style="border: 1px solid #ddd; border-radius: 3px; overflow: hidden;">
+                                <div style="background: #f6f7f7; border-bottom: 1px solid #ddd; padding: 6px 8px; display: flex; gap: 8px; font-size: 12px; color: #666;">
+                                    <span style="cursor: pointer; font-weight: 600;">B</span>
+                                    <span style="cursor: pointer; font-style: italic;">I</span>
+                                    <span style="cursor: pointer; text-decoration: underline;">U</span>
+                                    <span style="color: #ccc;">|</span>
+                                    <span style="cursor: pointer;">&#128279; Link</span>
+                                    <span style="cursor: pointer;">&#128247; Media</span>
+                                    <span style="color: #ccc;">|</span>
+                                    <span style="cursor: pointer;">H2</span>
+                                    <span style="cursor: pointer;">H3</span>
+                                </div>
+                                <div style="padding: 12px; min-height: 100px; font-size: 14px; line-height: 1.6; color: #444;" contenteditable="true">
+                                    <p><strong>ROSHN Sedra</strong> represents the pinnacle of modern Saudi living. Located in the prestigious north Riyadh corridor, these premium villas offer...</p>
+                                    <p>Features include smart home integration, private gardens, community pools, and direct access to retail and dining.</p>
+                                </div>
+                            </div>
+                            <p style="font-size: 11px; color: #999; margin-top: 2px;">Used on single property page.</p>
+                        </div>
+                        <!-- Gallery -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Gallery</label>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; padding: 12px; border: 2px dashed #c3c4c7; border-radius: 4px; background: #fafafa;">
+                                <div style="width: 80px; height: 80px; background: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999;">IMG 1</div>
+                                <div style="width: 80px; height: 80px; background: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999;">IMG 2</div>
+                                <div style="width: 80px; height: 80px; background: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999;">IMG 3</div>
+                                <div style="width: 80px; height: 80px; border: 2px dashed #c3c4c7; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #999; cursor: pointer;">+</div>
+                            </div>
+                        </div>
+                        <!-- Brochure + Gate toggle -->
+                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; margin-bottom: 16px; align-items: end;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Brochure PDF</label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="text" value="roshn-sedra-brochure-2026.pdf" style="flex: 1; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px; background: #f9f9f9;" readonly>
+                                    <button style="background: #2271b1; color: white; border: none; padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 12px; white-space: nowrap;">Upload</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1d2327; cursor: pointer;">
+                                    <div style="width: 40px; height: 22px; background: #C4973A; border-radius: 11px; position: relative; flex-shrink: 0;">
+                                        <div style="width: 18px; height: 18px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px;"></div>
+                                    </div>
+                                    Gate Download
+                                </label>
+                                <p style="font-size: 11px; color: #999; margin-top: 2px;">Users must enter email to download.</p>
+                            </div>
+                        </div>
+                        <!-- Featured toggle -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1d2327; cursor: pointer;">
+                                <div style="width: 40px; height: 22px; background: #C4973A; border-radius: 11px; position: relative; flex-shrink: 0;">
+                                    <div style="width: 18px; height: 18px; background: white; border-radius: 50%; position: absolute; top: 2px; right: 2px;"></div>
+                                </div>
+                                Featured (Show on Homepage)
+                            </label>
+                        </div>
+                        <!-- Map embed -->
+                        <div>
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Map Embed URL</label>
+                            <input type="url" value="https://www.google.com/maps/embed?pb=..." style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side metaboxes -->
+                <div style="display: grid; grid-template-columns: 1fr 300px; gap: 16px; margin-top: -16px;">
+                    <div></div>
+                    <div>
+                        <!-- Publish box -->
+                        <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                            <div style="padding: 8px 12px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;"><h3 style="font-size: 14px; font-weight: 600; margin: 0;">Publish</h3></div>
+                            <div style="padding: 12px; font-size: 13px; line-height: 2;">
+                                <div><strong>Status:</strong> Draft</div>
+                                <div><strong>Visibility:</strong> Public</div>
+                                <div><strong>Publish:</strong> Immediately</div>
+                                <div style="margin-top: 8px; text-align: right;">
+                                    <button style="background: #2271b1; color: white; border: none; padding: 6px 16px; border-radius: 3px; cursor: pointer; font-size: 13px;">Publish</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- City Taxonomy -->
+                        <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                            <div style="padding: 8px 12px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;"><h3 style="font-size: 14px; font-weight: 600; margin: 0;">City</h3></div>
+                            <div style="padding: 12px; font-size: 13px;">
+                                <label style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><input type="checkbox" checked> Riyadh</label>
+                                <label style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><input type="checkbox"> Jeddah</label>
+                                <label style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><input type="checkbox"> NEOM</label>
+                                <label style="display: flex; align-items: center; gap: 6px;"><input type="checkbox"> Dammam</label>
+                            </div>
+                        </div>
+                        <!-- Featured Image -->
+                        <div style="background: white; border: 1px solid #c3c4c7;">
+                            <div style="padding: 8px 12px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;"><h3 style="font-size: 14px; font-weight: 600; margin: 0;">Featured Image</h3></div>
+                            <div style="padding: 12px; text-align: center;">
+                                <div style="width: 100%; height: 140px; background: linear-gradient(135deg, #1a1a2e, #2a2a4e); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #C4973A; font-size: 12px;">Property Hero Image</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB: ALL PROPERTIES ===== -->
+            <div class="admin-panel" id="panel-property-list" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h1 style="font-size: 23px; font-weight: 400; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Properties <a href="#" style="font-size: 13px; background: none; padding: 4px 8px; border: 1px solid #2271b1; color: #2271b1; text-decoration: none; border-radius: 3px;">Add New</a></h1>
+                    <span style="font-size: 13px; color: #666;">12 items</span>
+                </div>
+                <div style="background: white; border: 1px solid #c3c4c7;">
+                    <table style="width: 100%; font-size: 13px; border-collapse: collapse; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                        <thead><tr style="background: #f6f7f7; border-bottom: 1px solid #c3c4c7;">
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600; width: 30px;"><input type="checkbox"></th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Title</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Developer</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">City</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Price From</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Badge</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Status</th>
+                            <th style="padding: 8px 12px; text-align: left; font-weight: 600;">Date</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 8px 12px;"><input type="checkbox"></td>
+                                <td style="padding: 8px 12px;"><strong><a href="#" style="color: #2271b1; text-decoration: none;">ROSHN Sedra Villas</a></strong></td>
+                                <td style="padding: 8px 12px;">ROSHN</td>
+                                <td style="padding: 8px 12px;">Riyadh</td>
+                                <td style="padding: 8px 12px;">SAR 1,850,000</td>
+                                <td style="padding: 8px 12px;"><span class="ce-developer-badge ce-developer-badge--verified" style="font-size: 10px;">Verified</span></td>
+                                <td style="padding: 8px 12px;">Published</td>
+                                <td style="padding: 8px 12px;">2 Apr 2026</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 8px 12px;"><input type="checkbox"></td>
+                                <td style="padding: 8px 12px;"><strong><a href="#" style="color: #2271b1; text-decoration: none;">Dar Global AIDA</a></strong></td>
+                                <td style="padding: 8px 12px;">Dar Global</td>
+                                <td style="padding: 8px 12px;">Jeddah</td>
+                                <td style="padding: 8px 12px;">SAR 2,100,000</td>
+                                <td style="padding: 8px 12px;"><span class="ce-developer-badge ce-developer-badge--premium_partner" style="font-size: 10px;">Premium</span></td>
+                                <td style="padding: 8px 12px;">Published</td>
+                                <td style="padding: 8px 12px;">1 Apr 2026</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 8px 12px;"><input type="checkbox"></td>
+                                <td style="padding: 8px 12px;"><strong><a href="#" style="color: #2271b1; text-decoration: none;">NEOM Marina Residences</a></strong></td>
+                                <td style="padding: 8px 12px;">NEOM</td>
+                                <td style="padding: 8px 12px;">NEOM</td>
+                                <td style="padding: 8px 12px;">SAR 3,200,000</td>
+                                <td style="padding: 8px 12px;"><span class="ce-developer-badge ce-developer-badge--track_record" style="font-size: 10px;">Track Record</span></td>
+                                <td style="padding: 8px 12px;">Published</td>
+                                <td style="padding: 8px 12px;">28 Mar 2026</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 8px 12px;"><input type="checkbox"></td>
+                                <td style="padding: 8px 12px;"><strong><a href="#" style="color: #2271b1; text-decoration: none;">Jeddah Tower Residences</a></strong></td>
+                                <td style="padding: 8px 12px;">Jeddah Economic Co.</td>
+                                <td style="padding: 8px 12px;">Jeddah</td>
+                                <td style="padding: 8px 12px;">SAR 4,500,000</td>
+                                <td style="padding: 8px 12px;">—</td>
+                                <td style="padding: 8px 12px;">Draft</td>
+                                <td style="padding: 8px 12px;">25 Mar 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== TAB: SITE SETTINGS (ACF Options) ===== -->
+            <div class="admin-panel" id="panel-site-settings" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <h1 style="font-size: 23px; font-weight: 400; margin-bottom: 20px; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Site Settings</h1>
+                <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                    <div style="padding: 10px 16px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
+                        <h2 style="font-size: 14px; font-weight: 600; margin: 0;">General Settings</h2>
+                    </div>
+                    <div style="padding: 16px;">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">WhatsApp Number</label>
+                            <input type="text" value="447000000000" style="width: 400px; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            <p style="font-size: 11px; color: #999; margin-top: 2px;">International format, e.g. 447000000000</p>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Contact Email</label>
+                            <input type="email" value="info@crownsestates.co.uk" style="width: 400px; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                        </div>
+                        <button style="background: #2271b1; color: white; border: none; padding: 6px 20px; border-radius: 3px; cursor: pointer; font-size: 13px;">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB: EXCHANGE RATES ===== -->
+            <div class="admin-panel" id="panel-exchange-rates" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <h1 style="font-size: 23px; font-weight: 400; margin-bottom: 20px; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Exchange Rates</h1>
+                <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                    <div style="padding: 10px 16px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
+                        <h2 style="font-size: 14px; font-weight: 600; margin: 0;">Exchange Rates</h2>
+                    </div>
+                    <div style="padding: 16px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">GBP to SAR</label>
+                                <input type="number" value="4.68" step="0.01" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">USD to SAR</label>
+                                <input type="number" value="3.75" step="0.01" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">GBP to USD</label>
+                                <input type="number" value="1.27" step="0.01" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                        </div>
+                        <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 4px; padding: 12px; font-size: 13px; color: #92400e; margin-bottom: 16px;">
+                            These rates are used for the currency toggle on the front-end and the investment calculator. Update periodically to reflect current market rates.
+                        </div>
+                        <button style="background: #2271b1; color: white; border: none; padding: 6px 20px; border-radius: 3px; cursor: pointer; font-size: 13px;">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB: CALCULATOR SETTINGS ===== -->
+            <div class="admin-panel" id="panel-calculator-settings" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <h1 style="font-size: 23px; font-weight: 400; margin-bottom: 20px; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Calculator Settings</h1>
+                <div style="background: white; border: 1px solid #c3c4c7; margin-bottom: 16px;">
+                    <div style="padding: 10px 16px; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
+                        <h2 style="font-size: 14px; font-weight: 600; margin: 0;">Calculator Settings</h2>
+                    </div>
+                    <div style="padding: 16px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Registration Fee (%)</label>
+                                <input type="number" value="2.5" step="0.1" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">VAT (%)</label>
+                                <input type="number" value="5" step="0.1" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #1d2327;">Agency Fee (%)</label>
+                                <input type="number" value="2" step="0.1" style="width: 100%; border: 1px solid #ddd; padding: 6px 10px; border-radius: 3px; font-size: 13px;">
+                            </div>
+                        </div>
+                        <div style="background: #e8f4fd; border: 1px solid #0073aa; border-radius: 4px; padding: 12px; font-size: 13px; color: #0a4b78; margin-bottom: 16px;">
+                            These percentages power the front-end investment calculator. Total cost = Price + Registration Fee + VAT + Agency Fee.
+                        </div>
+                        <button style="background: #2271b1; color: white; border: none; padding: 6px 20px; border-radius: 3px; cursor: pointer; font-size: 13px;">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TAB: ENQUIRIES ===== -->
+            <div class="admin-panel" id="panel-enquiries" style="display: none;">
+                <div style="background: #1d2327; color: white; padding: 6px 16px; margin: -20px -24px 20px; font-size: 13px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>&#127968; Crowns Estates &rarr; Visit Site</span>
+                    <span>Howdy, Admin</span>
+                </div>
+                <h1 style="font-size: 23px; font-weight: 400; margin-bottom: 20px; color: #1d2327; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Enquiries</h1>
+
+                <!-- Stats row -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;">
+                    <div style="background: white; border: 1px solid #c3c4c7; border-left: 4px solid #C4973A; padding: 12px 16px; border-radius: 0 4px 4px 0;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1d2327;">47</div>
+                        <div style="font-size: 12px; color: #666;">Total Enquiries</div>
+                    </div>
+                    <div style="background: white; border: 1px solid #c3c4c7; border-left: 4px solid #10B981; padding: 12px 16px; border-radius: 0 4px 4px 0;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1d2327;">12</div>
+                        <div style="font-size: 12px; color: #666;">This Week</div>
+                    </div>
+                    <div style="background: white; border: 1px solid #c3c4c7; border-left: 4px solid #3B82F6; padding: 12px 16px; border-radius: 0 4px 4px 0;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1d2327;">8</div>
+                        <div style="font-size: 12px; color: #666;">Brochure Downloads</div>
+                    </div>
+                    <div style="background: white; border: 1px solid #c3c4c7; border-left: 4px solid #7c3aed; padding: 12px 16px; border-radius: 0 4px 4px 0;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1d2327;">27</div>
+                        <div style="font-size: 12px; color: #666;">Register Interest</div>
+                    </div>
+                </div>
+
+                <div style="background: white; border: 1px solid #c3c4c7;">
+                    <table style="width: 100%; font-size: 13px; border-collapse: collapse; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                        <thead><tr style="background: #f6f7f7; border-bottom: 1px solid #c3c4c7;">
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Name</th>
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Email</th>
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Phone</th>
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Property Interest</th>
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Source</th>
+                            <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Date</th>
+                        </tr></thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>James Mitchell</strong></td>
+                                <td style="padding: 10px 12px;">j.mitchell@email.com</td>
+                                <td style="padding: 10px 12px;">+44 7911 234567</td>
+                                <td style="padding: 10px 12px;">ROSHN Sedra Villas</td>
+                                <td style="padding: 10px 12px;"><span style="background: #e8f4fd; color: #0073aa; padding: 2px 8px; border-radius: 3px; font-size: 11px;">property_page</span></td>
+                                <td style="padding: 10px 12px;">4 Apr 2026, 14:32</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>Sarah Foster</strong></td>
+                                <td style="padding: 10px 12px;">sarah.f@email.com</td>
+                                <td style="padding: 10px 12px;">+44 7800 111222</td>
+                                <td style="padding: 10px 12px;">—</td>
+                                <td style="padding: 10px 12px;"><span style="background: #f0e6ff; color: #7c3aed; padding: 2px 8px; border-radius: 3px; font-size: 11px;">register_interest</span></td>
+                                <td style="padding: 10px 12px;">3 Apr 2026, 09:15</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>Ahmed Khan</strong></td>
+                                <td style="padding: 10px 12px;">ahmed.k@email.com</td>
+                                <td style="padding: 10px 12px;">+966 55 123 4567</td>
+                                <td style="padding: 10px 12px;">Dar Global AIDA</td>
+                                <td style="padding: 10px 12px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 3px; font-size: 11px;">brochure_download</span></td>
+                                <td style="padding: 10px 12px;">2 Apr 2026, 18:44</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>Emily Roberts</strong></td>
+                                <td style="padding: 10px 12px;">emily.r@gmail.com</td>
+                                <td style="padding: 10px 12px;">+44 7700 900000</td>
+                                <td style="padding: 10px 12px;">Jeddah Tower Residences</td>
+                                <td style="padding: 10px 12px;"><span style="background: #e8f4fd; color: #0073aa; padding: 2px 8px; border-radius: 3px; font-size: 11px;">contact_form</span></td>
+                                <td style="padding: 10px 12px;">1 Apr 2026, 11:20</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>Omar Al-Fayed</strong></td>
+                                <td style="padding: 10px 12px;">omar.af@email.com</td>
+                                <td style="padding: 10px 12px;">+966 50 987 6543</td>
+                                <td style="padding: 10px 12px;">NEOM Marina</td>
+                                <td style="padding: 10px 12px;"><span style="background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 3px; font-size: 11px;">whatsapp</span></td>
+                                <td style="padding: 10px 12px;">31 Mar 2026, 16:05</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #f0f0f1;">
+                                <td style="padding: 10px 12px;"><strong>David Chen</strong></td>
+                                <td style="padding: 10px 12px;">d.chen@outlook.com</td>
+                                <td style="padding: 10px 12px;">+1 415 555 0123</td>
+                                <td style="padding: 10px 12px;">ROSHN Sedra Villas</td>
+                                <td style="padding: 10px 12px;"><span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 3px; font-size: 11px;">brochure_download</span></td>
+                                <td style="padding: 10px 12px;">30 Mar 2026, 08:33</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 12px;"><strong>Fatima Al-Rashid</strong></td>
+                                <td style="padding: 10px 12px;">fatima.r@email.sa</td>
+                                <td style="padding: 10px 12px;">+966 54 222 3333</td>
+                                <td style="padding: 10px 12px;">Dar Global AIDA</td>
+                                <td style="padding: 10px 12px;"><span style="background: #f0e6ff; color: #7c3aed; padding: 2px 8px; border-radius: 3px; font-size: 11px;">register_interest</span></td>
+                                <td style="padding: 10px 12px;">29 Mar 2026, 13:17</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 13px; color: #666;">
+                    <span>Showing 7 of 47 enquiries</span>
+                    <div style="display: flex; gap: 4px;">
+                        <span style="padding: 4px 10px; background: #2271b1; color: white; border-radius: 3px;">1</span>
+                        <a href="#" style="padding: 4px 10px; background: white; border: 1px solid #c3c4c7; border-radius: 3px; text-decoration: none; color: #2271b1;">2</a>
+                        <a href="#" style="padding: 4px 10px; background: white; border: 1px solid #c3c4c7; border-radius: 3px; text-decoration: none; color: #2271b1;">3</a>
+                        <a href="#" style="padding: 4px 10px; background: white; border: 1px solid #c3c4c7; border-radius: 3px; text-decoration: none; color: #2271b1;">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end main content -->
+    </div><!-- end grid -->
 </section>
 
 <!-- ============================================================ -->
@@ -882,6 +1420,53 @@ document.querySelectorAll('.ce-modal').forEach(function(m) {
         });
     });
 })();
+
+// Admin tab switching
+function switchAdminTab(tabName) {
+    document.querySelectorAll('.admin-panel').forEach(function(p) { p.style.display = 'none'; });
+    document.querySelectorAll('.admin-tab').forEach(function(t) { t.style.background = 'transparent'; t.style.color = '#eee'; });
+    var panel = document.getElementById('panel-' + tabName);
+    if (panel) panel.style.display = 'block';
+    var tab = document.querySelector('.admin-tab[data-tab="' + tabName + '"]');
+    if (tab) { tab.style.background = '#0073aa'; tab.style.color = 'white'; }
+    // Update sidebar active state
+    document.querySelectorAll('.ce-admin-sidebar-preview a').forEach(function(a) { a.classList.remove('active'); });
+}
+document.querySelectorAll('.admin-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() { switchAdminTab(this.getAttribute('data-tab')); });
+});
+
+// Admin sparkline charts (simple canvas drawing, no Chart.js needed)
+document.querySelectorAll('.ce-admin-sparkline').forEach(function(canvas) {
+    var ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = 80;
+    ctx.scale(2, 2);
+    var w = canvas.offsetWidth, h = 40;
+    var data = [3, 5, 2, 8, 6, 4, 7, 9, 5, 11, 8, 12];
+    var max = Math.max.apply(null, data);
+    var step = w / (data.length - 1);
+    ctx.beginPath();
+    ctx.moveTo(0, h - (data[0] / max) * (h - 4));
+    for (var i = 1; i < data.length; i++) {
+        var x = i * step, y = h - (data[i] / max) * (h - 4);
+        var px = (i - 1) * step, py = h - (data[i-1] / max) * (h - 4);
+        var cx = (px + x) / 2;
+        ctx.bezierCurveTo(cx, py, cx, y, x, y);
+    }
+    ctx.strokeStyle = '#C4973A';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // Fill
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    var grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, 'rgba(196, 151, 58, 0.15)');
+    grad.addColorStop(1, 'rgba(196, 151, 58, 0)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+});
 
 // 3D Scenes
 (function() {
