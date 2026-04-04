@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowns Estates — V2 Design Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wp-content/themes/crowns-estates/style.css">
+    <!-- Three.js for 3D scenes -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <style>
+        /* Preview navigation */
+        .preview-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+            background: #1a1a2e; color: white; padding: 8px 24px;
+            font-family: 'Inter', sans-serif; font-size: 13px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .preview-nav__links { display: flex; gap: 16px; flex-wrap: wrap; }
+        .preview-nav__links a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; }
+        .preview-nav__links a:hover, .preview-nav__links a.active { color: #C4973A; }
+        .preview-nav__badge { background: #C4973A; color: white; padding: 2px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+        .ce-header { top: 36px; }
+        .ce-hero:first-of-type { margin-top: 116px; }
+
+        /* Page dividers */
+        .page-divider { background: #0A0A0A; color: #C4973A; text-align: center; padding: 32px; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; border-top: 3px solid #C4973A; }
+        .page-divider small { display: block; color: #999; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 400; margin-top: 4px; letter-spacing: 0; }
+
+        /* 3D Canvas */
+        .ce-3d-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .ce-3d-canvas canvas { pointer-events: auto; }
+        .ce-hero { position: relative; overflow: hidden; }
+        .ce-hero__content { position: relative; z-index: 1; }
+
+        /* Developer Badge */
+        .ce-developer-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .ce-developer-badge--verified { background: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .ce-developer-badge--track_record { background: rgba(59, 130, 246, 0.1); color: #3B82F6; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .ce-developer-badge--premium_partner { background: rgba(196, 151, 58, 0.1); color: #C4973A; border: 1px solid rgba(196, 151, 58, 0.3); }
+
+        /* Property card enhancements */
+        .ce-property-card__status { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; color: white; }
+        .ce-property-card__status--off-plan { background: #3B82F6; }
+        .ce-property-card__status--construction { background: #F59E0B; }
+        .ce-property-card__status--ready { background: #10B981; }
+        .ce-property-card__developer { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--ce-grey-dark); margin-bottom: 4px; }
+        .ce-property-card__type { font-size: 0.8rem; color: var(--ce-grey-dark); margin-bottom: 8px; }
+        .ce-property-card__meta { display: flex; gap: 16px; margin-bottom: 12px; font-size: 0.85rem; }
+        .ce-property-card__meta-item strong { color: var(--ce-black); }
+        .ce-property-card__footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--ce-grey-mid); }
+        .ce-property-card__price { font-family: var(--ce-font-heading); font-size: 1.1rem; font-weight: 700; }
+        .ce-property-card__price small { font-weight: 400; font-size: 0.75rem; color: var(--ce-grey-dark); }
+
+        /* Testimonial card */
+        .ce-testimonial-card__stars { color: #C4973A; font-size: 1.1rem; margin-bottom: 8px; }
+        .ce-testimonial-card__star--empty { color: #ddd; }
+        .ce-testimonial-card__author { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+        .ce-testimonial-card__avatar { width: 40px; height: 40px; border-radius: 50%; background: #C4973A; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+        .ce-testimonial-card__name { font-weight: 600; }
+        .ce-testimonial-card__location { font-size: 0.8rem; color: var(--ce-grey-dark); }
+        .ce-testimonial-card__google { font-size: 0.75rem; color: #10B981; text-decoration: none; }
+
+        /* Modal preview */
+        .ce-modal-preview { background: white; border-radius: 8px; padding: 32px; max-width: 480px; margin: 0 auto; box-shadow: var(--ce-shadow-lg); }
+
+        /* Blog cards */
+        .ce-post-card { background: white; border-radius: var(--ce-border-radius-lg); overflow: hidden; box-shadow: var(--ce-shadow); }
+        .ce-post-card__image { display: block; height: 200px; background-size: cover; background-position: center; background-color: var(--ce-grey-light); }
+        .ce-post-card__body { padding: 20px; }
+        .ce-post-card__category { display: inline-block; background: rgba(196, 151, 58, 0.1); color: #C4973A; padding: 2px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+        .ce-post-card__title { font-size: 1.1rem; margin-bottom: 8px; }
+        .ce-post-card__title a { color: var(--ce-black); text-decoration: none; }
+        .ce-post-card__excerpt { font-size: 0.85rem; color: var(--ce-grey-dark); margin-bottom: 12px; }
+        .ce-post-card__meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ce-grey-dark); }
+        .ce-post-card__link { color: #C4973A; text-decoration: none; font-weight: 500; }
+
+        /* Single property */
+        .ce-property-detail { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .ce-property-detail__badges { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
+        .ce-property-detail__price { font-family: var(--ce-font-heading); font-size: 1.8rem; font-weight: 700; margin: 16px 0; }
+        .ce-property-specs { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .ce-property-specs td { padding: 10px 16px; border-bottom: 1px solid var(--ce-grey-mid); }
+        .ce-property-specs td:first-child { font-weight: 600; width: 140px; color: var(--ce-grey-dark); }
+        .ce-property-detail__enquiry-card { background: var(--ce-grey-lightest); border-radius: var(--ce-border-radius-lg); padding: 32px; position: sticky; top: 140px; }
+        .ce-property-gallery__hero { height: 400px; background-size: cover; background-position: center; background-color: var(--ce-grey-light); border-radius: var(--ce-border-radius-lg); }
+        .ce-property-gallery__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+        .ce-property-gallery__thumb { height: 100px; background-size: cover; background-position: center; border-radius: 4px; background-color: var(--ce-grey-mid); }
+        .ce-badge--freehold { background: rgba(16, 185, 129, 0.1); color: #10B981; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+
+        /* Admin dashboard preview */
+        .ce-admin-preview { background: #f0f0f1; padding: 32px; border-radius: 8px; }
+        .ce-admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 16px 0; }
+        .ce-admin-stat { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; text-align: center; }
+        .ce-admin-stat__value { font-size: 28px; font-weight: 700; color: #0A0A0A; }
+        .ce-admin-stat__label { font-size: 13px; color: #666; margin-top: 4px; }
+        .ce-admin-sidebar-preview { background: #1a1a1a; color: white; padding: 16px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; }
+        .ce-admin-sidebar-preview .active { background: #C4973A; padding: 8px 12px; border-radius: 4px; margin: 2px 0; display: block; }
+        .ce-admin-sidebar-preview a { color: rgba(255,255,255,0.7); text-decoration: none; display: block; padding: 8px 12px; }
+
+        /* Sidebar */
+        .ce-blog-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .ce-sidebar__widget { margin-bottom: 24px; }
+        .ce-sidebar__cta { background: var(--ce-black); color: white; padding: 24px; border-radius: var(--ce-border-radius-lg); text-align: center; }
+        .ce-sidebar__cta h3 { color: #C4973A; margin-bottom: 8px; }
+
+        /* Filter bar */
+        .ce-filter-bar { margin-bottom: 32px; }
+        .ce-filter-btn { padding: 8px 20px; border: 1px solid var(--ce-grey-mid); background: white; border-radius: 100px; font-size: 14px; cursor: pointer; transition: all 0.25s; }
+        .ce-filter-btn.active, .ce-filter-btn:hover { background: #C4973A; color: white; border-color: #C4973A; }
+
+        /* WhatsApp button */
+        .ce-whatsapp { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .ce-whatsapp svg { width: 28px; height: 28px; fill: white; }
+
+        /* Feature highlight badges */
+        .v2-new { display: inline-block; background: #10B981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-left: 8px; vertical-align: middle; }
+
+        @media (max-width: 768px) {
+            .preview-nav__links { display: none; }
+            .ce-property-detail, .ce-blog-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PREVIEW NAV -->
+<div class="preview-nav">
+    <div><span class="preview-nav__badge">V2 PREVIEW</span> Crowns Estates — Full Build Review</div>
+    <div class="preview-nav__links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#single-property">Property Detail</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#modals">Modals</a>
+        <a href="#admin">Admin</a>
+    </div>
+</div>
+
+<!-- HEADER -->
+<header class="ce-header">
+    <div class="ce-header__inner">
+        <a href="#home" class="ce-header__logo">CROWNS <span>ESTATES</span></a>
+        <nav class="ce-header__nav">
+            <a href="#home" class="active">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#blog">Insights</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="ce-header__actions">
+            <div class="ce-currency-toggle">
+                <span class="ce-currency-toggle__option active">GBP</span>
+                <span class="ce-currency-toggle__option">SAR</span>
+                <span class="ce-currency-toggle__option">USD</span>
+            </div>
+            <a href="#contact" class="ce-btn ce-btn--gold ce-btn--sm">Enquire</a>
+        </div>
+        <button class="ce-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<!-- ============================================================ -->
+<!-- HOME PAGE -->
+<!-- ============================================================ -->
+<div class="page-divider" id="home">HOME PAGE<small>front-page.php — Dynamic WP_Query + 3D Hero</small></div>
+
+<!-- Hero with 3D Canvas -->
+<div class="ce-hero" style="background-image: url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80');">
+    <div id="ce-3d-hero" class="ce-3d-canvas"></div>
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Saudi Arabia Property Investment</div>
+        <h1>Connecting Investors with Quality Property Opportunities</h1>
+        <p>British expat expertise, 20 years of local knowledge, and end-to-end investor support for the Saudi property market.</p>
+        <a href="#projects" class="ce-btn ce-btn--gold ce-btn--lg">View Opportunities</a>
+    </div>
+</div>
+
+<!-- Trust Bar -->
+<div class="ce-trust-bar">
+    <div class="ce-container">
+        <div class="ce-trust-bar__inner">
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> 20 Years in Saudi Arabia</div>
+            <div class="ce-trust-bar__divider"></div>
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> British Expat Expertise</div>
+            <div class="ce-trust-bar__divider"></div>
+            <div class="ce-trust-bar__item"><span class="ce-trust-bar__icon">&#9670;</span> End-to-End Investor Support</div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Properties -->
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Featured Opportunities</span>
+            <h2>Premium Investment Properties <span class="v2-new">Dynamic Query</span></h2>
+            <p class="ce-subtitle">Hand-picked developments offering strong returns and quality living.</p>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <!-- Property Card 1 -->
+            <div class="ce-property-card" data-city="riyadh" data-status="off-plan">
+                <a href="#single-property" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80');">
+                    <span class="ce-property-card__badge">Riyadh</span>
+                    <span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span>
+                </a>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title"><a href="#single-property">ROSHN Sedra Residences</a></h3>
+                    <div class="ce-property-card__developer">
+                        ROSHN
+                        <span class="ce-developer-badge ce-developer-badge--premium_partner"><span class="ce-developer-badge__icon">&#128737;&#9813;</span><span class="ce-developer-badge__label">Premium Partner</span></span>
+                    </div>
+                    <div class="ce-property-card__type">Villa &bull; Freehold</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>3-5</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>250</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2027</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price"><span class="ce-price" data-price="1200000" data-currency="SAR">SAR 1,200,000</span> <small>from</small></div>
+                        <a href="#single-property" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Card 2 -->
+            <div class="ce-property-card" data-city="jeddah" data-status="under-construction">
+                <a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80');">
+                    <span class="ce-property-card__badge">Jeddah</span>
+                    <span class="ce-property-card__status ce-property-card__status--construction">Under Construction</span>
+                </a>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title"><a href="#">Dar Global AIDA</a></h3>
+                    <div class="ce-property-card__developer">
+                        Dar Global
+                        <span class="ce-developer-badge ce-developer-badge--verified"><span class="ce-developer-badge__icon">&#128737;</span><span class="ce-developer-badge__label">Verified Developer</span></span>
+                    </div>
+                    <div class="ce-property-card__type">Apartment &bull; Freehold</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>1-3</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>85</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2026</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price"><span class="ce-price" data-price="750000" data-currency="SAR">SAR 750,000</span> <small>from</small></div>
+                        <a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Card 3 -->
+            <div class="ce-property-card" data-city="neom" data-status="off-plan">
+                <a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80');">
+                    <span class="ce-property-card__badge">NEOM</span>
+                    <span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span>
+                </a>
+                <div class="ce-property-card__body">
+                    <h3 class="ce-property-card__title"><a href="#">NEOM Leyja Mountain Resort</a></h3>
+                    <div class="ce-property-card__developer">
+                        NEOM Co.
+                        <span class="ce-developer-badge ce-developer-badge--track_record"><span class="ce-developer-badge__icon">&#128737;&#9733;</span><span class="ce-developer-badge__label">Track Record</span></span>
+                    </div>
+                    <div class="ce-property-card__type">Villa</div>
+                    <div class="ce-property-card__meta">
+                        <div class="ce-property-card__meta-item"><strong>4</strong> Beds</div>
+                        <div class="ce-property-card__meta-item"><strong>320</strong> Sq.M.</div>
+                        <div class="ce-property-card__meta-item"><strong>2028</strong> Completion</div>
+                    </div>
+                    <div class="ce-property-card__footer">
+                        <div class="ce-property-card__price"><span class="ce-price" data-price="2500000" data-currency="SAR">SAR 2,500,000</span> <small>from</small></div>
+                        <a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: var(--ce-space-xl);">
+            <a href="#projects" class="ce-btn ce-btn--outline">View All Properties</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Invest -->
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Why Saudi Arabia</span>
+            <h2>A Market of Opportunity</h2>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#8593;</div><h3>Market Growth</h3><p>Saudi Arabia's real estate sector is experiencing unprecedented growth driven by Vision 2030.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#9733;</div><h3>Golden Visa</h3><p>The Premium Residency programme offers investors long-term residency through qualifying purchases.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#8962;</div><h3>Freehold Zones</h3><p>International investors can now own freehold property in designated zones across Riyadh, Jeddah, and NEOM.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Investor Testimonials</span>
+            <h2>Trusted by Investors Worldwide <span class="v2-new">Dynamic Query</span></h2>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="ce-testimonial-card__quote">"Crowns Estates made the entire process seamless. Their local knowledge and honest guidance gave us confidence to invest in Riyadh."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">JM</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">James Mitchell</div>
+                        <div class="ce-testimonial-card__location">London, UK</div>
+                        <a href="#" class="ce-testimonial-card__google">&#10003; Google Review</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="ce-testimonial-card__quote">"As a first-time overseas investor, I was nervous. The Crowns team held my hand through every step — from selection to completion."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">SF</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">Sarah Foster</div>
+                        <div class="ce-testimonial-card__location">Manchester, UK</div>
+                        <a href="#" class="ce-testimonial-card__google">&#10003; Google Review</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ce-testimonial-card">
+                <div class="ce-testimonial-card__stars">&#9733;&#9733;&#9733;&#9733;<span class="ce-testimonial-card__star--empty">&#9733;</span></div>
+                <p class="ce-testimonial-card__quote">"Professional, knowledgeable, and genuinely helpful. They found us a villa in Jeddah that exceeded our expectations."</p>
+                <div class="ce-testimonial-card__author">
+                    <div class="ce-testimonial-card__avatar">AK</div>
+                    <div>
+                        <div class="ce-testimonial-card__name">Ahmed Khan</div>
+                        <div class="ce-testimonial-card__location">Dubai, UAE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Snippet -->
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-two-col" style="align-items: center;">
+            <div>
+                <span class="ce-label">About Crowns Estates</span>
+                <h2 style="margin-top: 8px;">Your Trusted Partner in Saudi Property Investment</h2>
+                <p>As British expats who have lived and worked in Saudi Arabia for over 20 years, we bring unparalleled local expertise to international property investors.</p>
+                <a href="#about" class="ce-btn ce-btn--outline">Learn More About Us</a>
+            </div>
+            <div style="background: var(--ce-grey-mid); height: 400px; border-radius: var(--ce-border-radius-lg); display: flex; align-items: center; justify-content: center; color: var(--ce-grey-dark);">Team Photo Placeholder</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="ce-cta">
+    <div class="ce-container">
+        <h2>Ready to Invest?</h2>
+        <p>Speak to our team about investment opportunities in Saudi Arabia.</p>
+        <button class="ce-btn ce-btn--gold ce-btn--lg" onclick="document.getElementById('modal-register-interest').setAttribute('aria-hidden','false')">Talk to Our Team</button>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PROJECTS PAGE -->
+<!-- ============================================================ -->
+<div class="page-divider" id="projects">PROJECTS PAGE<small>page-projects.php — Dynamic Filter + 3D City Map</small></div>
+
+<div class="ce-hero">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Projects</div>
+        <h1>Investment Projects</h1>
+        <p>Explore our curated selection of Saudi Arabian property investment opportunities.</p>
+    </div>
+</div>
+
+<!-- 3D Projects Map placeholder -->
+<div style="position: relative; height: 300px; background: #0A0A0A;">
+    <div id="ce-3d-projects-map" style="width: 100%; height: 100%;"></div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-filter-bar">
+            <div class="ce-filter-group">
+                <button class="ce-filter-btn active" data-filter="all">All Cities</button>
+                <button class="ce-filter-btn" data-filter="riyadh">Riyadh</button>
+                <button class="ce-filter-btn" data-filter="jeddah">Jeddah</button>
+                <button class="ce-filter-btn" data-filter="neom">NEOM</button>
+                <button class="ce-filter-btn" data-filter="alula">AlUla</button>
+            </div>
+        </div>
+        <div class="ce-grid ce-grid--3">
+            <!-- Reuse property cards from above + 3 more -->
+            <div class="ce-property-card" data-city="riyadh"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80');"><span class="ce-property-card__badge">Riyadh</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">ROSHN Sedra Residences</a></h3><div class="ce-property-card__developer">ROSHN <span class="ce-developer-badge ce-developer-badge--premium_partner"><span class="ce-developer-badge__label">Premium Partner</span></span></div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 1,200,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+            <div class="ce-property-card" data-city="jeddah"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80');"><span class="ce-property-card__badge">Jeddah</span><span class="ce-property-card__status ce-property-card__status--construction">Under Construction</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">Dar Global AIDA</a></h3><div class="ce-property-card__developer">Dar Global <span class="ce-developer-badge ce-developer-badge--verified"><span class="ce-developer-badge__label">Verified</span></span></div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 750,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+            <div class="ce-property-card" data-city="neom"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80');"><span class="ce-property-card__badge">NEOM</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">NEOM Leyja Mountain Resort</a></h3><div class="ce-property-card__developer">NEOM Co. <span class="ce-developer-badge ce-developer-badge--track_record"><span class="ce-developer-badge__label">Track Record</span></span></div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 2,500,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+            <div class="ce-property-card" data-city="riyadh"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80');"><span class="ce-property-card__badge">Riyadh</span><span class="ce-property-card__status ce-property-card__status--ready">Ready</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">Al Diriyah Gate — Heritage Quarter</a></h3><div class="ce-property-card__developer">DGDA</div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 3,100,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+            <div class="ce-property-card" data-city="jeddah"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80');"><span class="ce-property-card__badge">Jeddah</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">Red Sea Waterfront Apartments</a></h3><div class="ce-property-card__developer">Jabal Omar Development</div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 580,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+            <div class="ce-property-card" data-city="alula"><a href="#" class="ce-property-card__image" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80');"><span class="ce-property-card__badge">AlUla</span><span class="ce-property-card__status ce-property-card__status--off-plan">Off-Plan</span></a><div class="ce-property-card__body"><h3 class="ce-property-card__title"><a href="#">AlUla Desert Retreat Villas</a></h3><div class="ce-property-card__developer">RCU</div><div class="ce-property-card__footer"><div class="ce-property-card__price">SAR 4,200,000 <small>from</small></div><a href="#" class="ce-btn ce-btn--outline ce-btn--sm">View</a></div></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SINGLE PROPERTY PAGE -->
+<!-- ============================================================ -->
+<div class="page-divider" id="single-property">SINGLE PROPERTY PAGE<small>single-ce_property.php — Gallery, Specs, Brochure Gate, Enquiry Form</small></div>
+
+<section class="ce-section" style="padding-top: 32px;">
+    <div class="ce-container">
+        <!-- Gallery -->
+        <div class="ce-property-gallery__hero" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80');"></div>
+        <div class="ce-property-gallery__thumbs">
+            <div class="ce-property-gallery__thumb" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80');"></div>
+            <div class="ce-property-gallery__thumb" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80');"></div>
+            <div class="ce-property-gallery__thumb" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80');"></div>
+            <div class="ce-property-gallery__thumb" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80');"></div>
+        </div>
+
+        <div class="ce-property-detail" style="margin-top: 32px;">
+            <div class="ce-property-detail__main">
+                <h1>ROSHN Sedra Residences</h1>
+                <div class="ce-property-detail__badges">
+                    <span class="ce-property-card__badge" style="background: var(--ce-gold); color: white; padding: 4px 12px; border-radius: 4px;">Riyadh</span>
+                    <span class="ce-property-card__status" style="background: #3B82F6; color: white; padding: 4px 12px; border-radius: 4px;">Off-Plan</span>
+                    <span class="ce-badge--freehold">Freehold</span>
+                </div>
+                <div class="ce-property-card__developer" style="font-size: 1rem; margin: 12px 0;">
+                    ROSHN
+                    <span class="ce-developer-badge ce-developer-badge--premium_partner"><span class="ce-developer-badge__icon">&#128737;&#9813;</span><span class="ce-developer-badge__label">Premium Partner</span></span>
+                </div>
+                <div class="ce-property-detail__price"><span class="ce-price" data-price="1200000" data-currency="SAR">SAR 1,200,000</span></div>
+
+                <table class="ce-property-specs">
+                    <tr><td>Type</td><td>Villa</td></tr>
+                    <tr><td>Bedrooms</td><td>3-5</td></tr>
+                    <tr><td>Size</td><td>250 Sq.M.</td></tr>
+                    <tr><td>Completion</td><td>March 2027</td></tr>
+                    <tr><td>Ownership</td><td>Freehold</td></tr>
+                </table>
+
+                <div style="margin: 24px 0; line-height: 1.7; color: var(--ce-grey-dark);">
+                    <p>ROSHN Sedra Residences is a premium villa community in North Riyadh, developed by Saudi Arabia's largest real estate developer. The community features world-class amenities including parks, retail, schools, and healthcare facilities, all within a walkable neighbourhood designed to international standards.</p>
+                    <p>Each villa combines modern architecture with traditional Saudi design elements, offering spacious living areas, private gardens, and smart home technology as standard.</p>
+                </div>
+
+                <!-- Brochure Gate button -->
+                <button class="ce-btn ce-btn--outline" onclick="document.getElementById('modal-brochure-gate').setAttribute('aria-hidden','false')" style="margin-bottom: 24px;">
+                    &#128196; Download Brochure <span class="v2-new">Gated</span>
+                </button>
+
+                <div style="color: var(--ce-grey-dark); font-size: 0.85rem; margin-top: 32px; padding: 16px; background: var(--ce-grey-lightest); border-radius: 4px;">
+                    Prices, specifications, and completion dates are indicative and subject to change. Please contact us for the latest information.
+                </div>
+            </div>
+
+            <!-- Sidebar enquiry form -->
+            <div class="ce-property-detail__sidebar">
+                <div class="ce-property-detail__enquiry-card">
+                    <h3>Interested in this property?</h3>
+                    <p style="color: var(--ce-grey-dark); font-size: 0.9rem;">Register your interest and our team will be in touch within 24 hours.</p>
+                    <form class="ce-form" onsubmit="event.preventDefault(); alert('Enquiry submitted! (Preview mode)');">
+                        <div class="ce-form__group"><input class="ce-form__input" type="text" placeholder="Full Name *" required></div>
+                        <div class="ce-form__group"><input class="ce-form__input" type="email" placeholder="Email *" required></div>
+                        <div class="ce-form__group"><input class="ce-form__input" type="tel" placeholder="Phone"></div>
+                        <div class="ce-form__group"><textarea class="ce-form__input" rows="3" placeholder="Message"></textarea></div>
+                        <div class="ce-form__group ce-form__group--checkbox"><label><input type="checkbox" required> I agree to the <a href="#">Privacy Policy</a>.</label></div>
+                        <button type="submit" class="ce-btn ce-btn--gold" style="width: 100%;">Register Interest</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- HOW IT WORKS -->
+<!-- ============================================================ -->
+<div class="page-divider" id="how-it-works">HOW IT WORKS<small>page-how-it-works.php — 3D Journey Path + Calculator + FAQ</small></div>
+
+<div class="ce-hero">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">How It Works</div>
+        <h1>Your Investment Journey</h1>
+        <p>From first enquiry to keys in hand — here's how we guide you through every step.</p>
+    </div>
+</div>
+
+<!-- 3D Journey container -->
+<div style="position: relative; height: 400px; background: #0A0A0A;">
+    <div id="ce-3d-journey" style="width: 100%; height: 100%;"></div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-steps">
+            <div class="ce-step"><div class="ce-step__number">01</div><h3>Discovery Call</h3><p>We learn about your goals, budget, and preferences to tailor our recommendations.</p></div>
+            <div class="ce-step"><div class="ce-step__number">02</div><h3>Property Selection</h3><p>We present curated options matching your criteria, with detailed analysis of each.</p></div>
+            <div class="ce-step"><div class="ce-step__number">03</div><h3>Due Diligence</h3><p>We verify developer credentials, legal standing, and project viability on your behalf.</p></div>
+            <div class="ce-step"><div class="ce-step__number">04</div><h3>Purchase & Payment</h3><p>We guide you through the purchase process, payment plans, and legal requirements.</p></div>
+            <div class="ce-step"><div class="ce-step__number">05</div><h3>Handover & Beyond</h3><p>We support you through completion, handover, and ongoing property management.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Investment Calculator -->
+<section class="ce-section ce-section--grey">
+    <div class="ce-container">
+        <div class="ce-section__header">
+            <span class="ce-label">Investment Calculator</span>
+            <h2>Estimate Your Total Cost <span class="v2-new">JS Module</span></h2>
+        </div>
+        <div class="ce-calculator" id="ce-calculator" style="max-width: 600px; margin: 0 auto;">
+            <div class="ce-form__group">
+                <label class="ce-form__label">Property Price (SAR)</label>
+                <input class="ce-form__input" type="number" name="calc-price" placeholder="e.g. 1200000" id="calc-price-input">
+            </div>
+            <div id="ce-calculator-output" style="margin-top: 24px;">
+                <table class="ce-property-specs">
+                    <tr><td>Property Price</td><td>SAR <span data-calc="price">0</span></td></tr>
+                    <tr><td>Registration Fee (2.5%)</td><td>SAR <span data-calc="reg-fee">0</span></td></tr>
+                    <tr><td>VAT (5%)</td><td>SAR <span data-calc="vat">0</span></td></tr>
+                    <tr><td>Agency Fee (2%)</td><td>SAR <span data-calc="agency-fee">0</span></td></tr>
+                    <tr style="font-weight: 700;"><td>Total</td><td>SAR <span data-calc="total">0</span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- BLOG -->
+<!-- ============================================================ -->
+<div class="page-divider" id="blog">BLOG / INSIGHTS<small>archive.php + single.php + sidebar.php</small></div>
+
+<div class="ce-hero">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Blog</div>
+        <h1>Insights & Guides</h1>
+        <p>Expert articles on Saudi Arabian property investment, market trends, and investor guides.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-blog-layout">
+            <div>
+                <div class="ce-grid ce-grid--2">
+                    <article class="ce-post-card">
+                        <a href="#" class="ce-post-card__image" style="background-image: url('https://images.unsplash.com/photo-1466442929976-97f336a657be?w=600&q=80');"></a>
+                        <div class="ce-post-card__body">
+                            <span class="ce-post-card__category">Investment Guide</span>
+                            <h3 class="ce-post-card__title"><a href="#">5 Things UK Investors Need to Know About Saudi Property in 2026</a></h3>
+                            <p class="ce-post-card__excerpt">From Vision 2030 to freehold ownership, here's what every UK investor should know before entering the Saudi market.</p>
+                            <div class="ce-post-card__meta"><time>4 April 2026</time><a href="#" class="ce-post-card__link">Read More &rarr;</a></div>
+                        </div>
+                    </article>
+                    <article class="ce-post-card">
+                        <a href="#" class="ce-post-card__image" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80');"></a>
+                        <div class="ce-post-card__body">
+                            <span class="ce-post-card__category">Visa & Residency</span>
+                            <h3 class="ce-post-card__title"><a href="#">Golden Visa Through Real Estate — A Step-by-Step Guide</a></h3>
+                            <p class="ce-post-card__excerpt">Everything you need to know about obtaining Saudi Premium Residency through property investment.</p>
+                            <div class="ce-post-card__meta"><time>2 April 2026</time><a href="#" class="ce-post-card__link">Read More &rarr;</a></div>
+                        </div>
+                    </article>
+                    <article class="ce-post-card">
+                        <a href="#" class="ce-post-card__image" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80');"></a>
+                        <div class="ce-post-card__body">
+                            <span class="ce-post-card__category">Market Analysis</span>
+                            <h3 class="ce-post-card__title"><a href="#">Riyadh vs Jeddah — Where Should You Invest?</a></h3>
+                            <p class="ce-post-card__excerpt">A head-to-head comparison of Saudi Arabia's two biggest property markets for international investors.</p>
+                            <div class="ce-post-card__meta"><time>28 March 2026</time><a href="#" class="ce-post-card__link">Read More &rarr;</a></div>
+                        </div>
+                    </article>
+                    <article class="ce-post-card">
+                        <a href="#" class="ce-post-card__image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80');"></a>
+                        <div class="ce-post-card__body">
+                            <span class="ce-post-card__category">NEOM</span>
+                            <h3 class="ce-post-card__title"><a href="#">NEOM Investment Guide — What's Available and What to Expect</a></h3>
+                            <p class="ce-post-card__excerpt">An overview of residential investment opportunities within the world's most ambitious giga-project.</p>
+                            <div class="ce-post-card__meta"><time>25 March 2026</time><a href="#" class="ce-post-card__link">Read More &rarr;</a></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <aside>
+                <div class="ce-sidebar__widget">
+                    <form><input class="ce-form__input" type="search" placeholder="Search articles..."></form>
+                </div>
+                <div class="ce-sidebar__widget">
+                    <h3 class="ce-widget__title">Categories</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 0.9rem; line-height: 2;">
+                        <li><a href="#" style="color: var(--ce-black); text-decoration: none;">Investment Guide (3)</a></li>
+                        <li><a href="#" style="color: var(--ce-black); text-decoration: none;">Market Analysis (2)</a></li>
+                        <li><a href="#" style="color: var(--ce-black); text-decoration: none;">Visa & Residency (1)</a></li>
+                        <li><a href="#" style="color: var(--ce-black); text-decoration: none;">NEOM (1)</a></li>
+                    </ul>
+                </div>
+                <div class="ce-sidebar__cta">
+                    <h3>Ready to invest?</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.8;">Speak to our team about Saudi property opportunities.</p>
+                    <button class="ce-btn ce-btn--gold" onclick="document.getElementById('modal-register-interest').setAttribute('aria-hidden','false')">Register Interest</button>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- MODALS -->
+<!-- ============================================================ -->
+<div class="page-divider" id="modals">MODALS & FORMS<small>Register Interest + Brochure Gate — REST-driven via /ce/v1/enquiry</small></div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-grid ce-grid--2">
+            <div>
+                <h3>Register Interest Modal <span class="v2-new">REST API</span></h3>
+                <p style="color: var(--ce-grey-dark); margin-bottom: 16px;">Opens from any CTA button. Submits to <code>/wp-json/ce/v1/enquiry</code>.</p>
+                <div class="ce-modal-preview">
+                    <h3>Register Your Interest</h3>
+                    <p style="color: var(--ce-grey-dark); font-size: 0.9rem;">Complete the form below and our team will be in touch within 24 hours.</p>
+                    <form class="ce-form" onsubmit="event.preventDefault(); alert('Enquiry submitted! (Preview mode)');">
+                        <div class="ce-form__group"><label class="ce-form__label">Full Name *</label><input class="ce-form__input" type="text"></div>
+                        <div class="ce-form__group"><label class="ce-form__label">Email *</label><input class="ce-form__input" type="email"></div>
+                        <div class="ce-form__group"><label class="ce-form__label">Phone</label><input class="ce-form__input" type="tel"></div>
+                        <div class="ce-form__group"><label class="ce-form__label">Message</label><textarea class="ce-form__input" rows="3"></textarea></div>
+                        <div class="ce-form__group ce-form__group--checkbox"><label><input type="checkbox"> I agree to the Privacy Policy.</label></div>
+                        <button type="submit" class="ce-btn ce-btn--gold">Send Enquiry</button>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <h3>Brochure Gate Modal <span class="v2-new">Gated Download</span></h3>
+                <p style="color: var(--ce-grey-dark); margin-bottom: 16px;">Per-property toggle. Captures email before PDF download.</p>
+                <div class="ce-modal-preview">
+                    <h3>Download Brochure</h3>
+                    <p style="color: var(--ce-grey-dark); font-size: 0.9rem;">Enter your details and we'll send the brochure to your email.</p>
+                    <form class="ce-form" onsubmit="event.preventDefault(); alert('Brochure sent! (Preview mode)');">
+                        <div class="ce-form__group"><label class="ce-form__label">Full Name *</label><input class="ce-form__input" type="text"></div>
+                        <div class="ce-form__group"><label class="ce-form__label">Email *</label><input class="ce-form__input" type="email"></div>
+                        <div class="ce-form__group ce-form__group--checkbox"><label><input type="checkbox"> I agree to the Privacy Policy.</label></div>
+                        <button type="submit" class="ce-btn ce-btn--gold">Get Brochure</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ADMIN DASHBOARD -->
+<!-- ============================================================ -->
+<div class="page-divider" id="admin">CUSTOM ADMIN DASHBOARD<small>inc/admin-dashboard.php — Branded WP Backend</small></div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-grid" style="display: grid; grid-template-columns: 220px 1fr; gap: 24px;">
+            <!-- Sidebar preview -->
+            <div class="ce-admin-sidebar-preview">
+                <div style="padding: 12px; font-weight: 700; font-size: 14px; color: #C4973A; margin-bottom: 12px;">Crowns Estates</div>
+                <a href="#" class="active">&#128200; Dashboard</a>
+                <a href="#">&#127970; Properties</a>
+                <a href="#">&#128172; Testimonials</a>
+                <a href="#">&#128221; Blog Posts</a>
+                <a href="#">&#128230; Media</a>
+                <a href="#">&#128100; Users</a>
+                <a href="#">&#9881; Site Settings</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;">Exchange Rates</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;">Calculator</a>
+                <a href="#" style="margin-left: 16px; font-size: 12px;">Enquiries</a>
+            </div>
+            <!-- Main area -->
+            <div class="ce-admin-preview">
+                <h2 style="margin-bottom: 16px;">Dashboard — Crowns Estates Overview</h2>
+                <div class="ce-admin-stats">
+                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">12</div><div class="ce-admin-stat__label">Total Properties</div></div>
+                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">47</div><div class="ce-admin-stat__label">Enquiries</div></div>
+                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">3</div><div class="ce-admin-stat__label">Users</div></div>
+                    <div class="ce-admin-stat"><div class="ce-admin-stat__value">SAR 18,500,000</div><div class="ce-admin-stat__label">Total Property Value</div></div>
+                </div>
+                <div style="margin-top: 24px; padding: 16px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
+                    <h3 style="margin-bottom: 12px;">Recent Enquiries</h3>
+                    <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #eee; font-weight: 600;"><td style="padding: 8px;">Name</td><td>Email</td><td>Property</td><td>Source</td><td>Date</td></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">James Mitchell</td><td>j.mitchell@email.com</td><td>ROSHN Sedra</td><td>property_page</td><td>4 Apr 2026</td></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px;">Sarah Foster</td><td>sarah.f@email.com</td><td>—</td><td>register_interest</td><td>3 Apr 2026</td></tr>
+                        <tr><td style="padding: 8px;">Ahmed Khan</td><td>ahmed.k@email.com</td><td>Dar Global AIDA</td><td>brochure_download</td><td>2 Apr 2026</td></tr>
+                    </table>
+                </div>
+                <div style="margin-top: 16px; text-align: center; color: #999; font-size: 12px;">Crowns Estates Admin Panel — Powered by WordPress</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ABOUT (kept from v1) -->
+<!-- ============================================================ -->
+<div class="page-divider" id="about">ABOUT US<small>page-about.php — Mostly static</small></div>
+
+<div class="ce-hero">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">About Us</div>
+        <h1>Crowns Estates</h1>
+        <p>British expats with 20 years of Saudi expertise, guiding international investors with trust and transparency.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-grid ce-grid--3">
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#128161;</div><h3>Local Knowledge</h3><p>Two decades living and working in Saudi Arabia gives us insight that no market report can match.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#129309;</div><h3>Honest Advice</h3><p>We tell you what we'd tell a friend. No pressure, no hidden agendas — just straight-talking guidance.</p></div>
+            <div class="ce-icon-block"><div class="ce-icon-block__icon">&#127919;</div><h3>End-to-End Support</h3><p>From first call to handover and beyond, we're with you at every stage of your investment journey.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CONTACT -->
+<!-- ============================================================ -->
+<div class="page-divider" id="contact">CONTACT<small>page-contact.php — Enquiry form → REST API</small></div>
+
+<div class="ce-hero">
+    <div class="ce-hero__content">
+        <div class="ce-hero__label">Contact</div>
+        <h1>Get in Touch</h1>
+        <p>Ready to explore Saudi property investment? Our team is here to help.</p>
+    </div>
+</div>
+
+<section class="ce-section">
+    <div class="ce-container">
+        <div class="ce-two-col">
+            <div>
+                <form class="ce-form" id="form-contact" onsubmit="event.preventDefault(); alert('Enquiry submitted! (Preview mode)');">
+                    <div class="ce-form__group"><label class="ce-form__label">Full Name *</label><input class="ce-form__input" type="text" required></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Email *</label><input class="ce-form__input" type="email" required></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Phone</label><input class="ce-form__input" type="tel"></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Property Interest</label><input class="ce-form__input" type="text" placeholder="e.g. Villas in Riyadh"></div>
+                    <div class="ce-form__group"><label class="ce-form__label">Message *</label><textarea class="ce-form__input" rows="5" required></textarea></div>
+                    <div class="ce-form__group ce-form__group--checkbox"><label><input type="checkbox" required> I agree to the Privacy Policy and consent to Crowns Estates processing my data.</label></div>
+                    <button type="submit" class="ce-btn ce-btn--gold">Send Enquiry</button>
+                </form>
+            </div>
+            <div>
+                <h3>Contact Information</h3>
+                <p style="margin: 16px 0; line-height: 2;">
+                    &#128231; info@crownsestates.co.uk<br>
+                    &#128241; WhatsApp: +44 7000 000 000<br>
+                    &#127758; www.crownsestates.co.uk
+                </p>
+                <h3>Office Hours</h3>
+                <p style="margin-top: 8px; color: var(--ce-grey-dark);">
+                    Monday – Friday: 9am – 6pm (GMT)<br>
+                    Saturday: 10am – 2pm<br>
+                    Sunday: Closed
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ce-footer">
+    <div class="ce-container">
+        <div class="ce-footer__grid">
+            <div class="ce-footer__brand"><a href="#home" class="ce-header__logo">CROWNS <span>ESTATES</span></a><p>Connecting UK and global investors with quality property opportunities in Saudi Arabia.</p></div>
+            <div><h4>Quick Links</h4><div class="ce-footer__links"><a href="#projects">Projects</a><a href="#how-it-works">How It Works</a><a href="#blog">Insights</a><a href="#about">About Us</a><a href="#contact">Contact</a></div></div>
+            <div><h4>Contact</h4><div class="ce-footer__links"><a href="mailto:info@crownsestates.co.uk">info@crownsestates.co.uk</a><a href="#">WhatsApp</a></div></div>
+            <div><h4>Legal</h4><div class="ce-footer__links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Disclaimer</a><a href="#">Cookie Policy</a></div></div>
+        </div>
+        <div class="ce-footer__disclaimer">Crowns Estates is not regulated by the FCA. Information on this website does not constitute financial advice. Please seek independent advice before making investment decisions.</div>
+        <div class="ce-footer__bottom"><span>&copy; 2026 Crowns Estates. All rights reserved.</span><div class="ce-footer__legal"><span>A UK-registered company</span></div></div>
+    </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="#" class="ce-whatsapp" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- Hidden modals (for testing open/close) -->
+<div class="ce-modal" id="modal-register-interest" aria-hidden="true" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10001; display: none;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6);" onclick="this.parentElement.setAttribute('aria-hidden','true'); this.parentElement.style.display='none';"></div>
+    <div style="position: relative; background: white; max-width: 500px; margin: 10vh auto; padding: 32px; border-radius: 8px; z-index: 1;">
+        <button style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer;" onclick="this.closest('.ce-modal').setAttribute('aria-hidden','true'); this.closest('.ce-modal').style.display='none';">&times;</button>
+        <h3>Register Your Interest</h3>
+        <p style="color: #666; margin: 8px 0 16px;">Our team will be in touch within 24 hours.</p>
+        <div class="ce-form__group"><input class="ce-form__input" type="text" placeholder="Full Name *"></div>
+        <div class="ce-form__group"><input class="ce-form__input" type="email" placeholder="Email *"></div>
+        <div class="ce-form__group"><input class="ce-form__input" type="tel" placeholder="Phone"></div>
+        <button class="ce-btn ce-btn--gold" style="width: 100%;" onclick="alert('Enquiry submitted!'); this.closest('.ce-modal').style.display='none';">Send Enquiry</button>
+    </div>
+</div>
+
+<div class="ce-modal" id="modal-brochure-gate" aria-hidden="true" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10001; display: none;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6);" onclick="this.parentElement.setAttribute('aria-hidden','true'); this.parentElement.style.display='none';"></div>
+    <div style="position: relative; background: white; max-width: 500px; margin: 10vh auto; padding: 32px; border-radius: 8px; z-index: 1;">
+        <button style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer;" onclick="this.closest('.ce-modal').setAttribute('aria-hidden','true'); this.closest('.ce-modal').style.display='none';">&times;</button>
+        <h3>Download Brochure</h3>
+        <p style="color: #666; margin: 8px 0 16px;">Enter your details to receive the brochure.</p>
+        <div class="ce-form__group"><input class="ce-form__input" type="text" placeholder="Full Name *"></div>
+        <div class="ce-form__group"><input class="ce-form__input" type="email" placeholder="Email *"></div>
+        <button class="ce-btn ce-btn--gold" style="width: 100%;" onclick="alert('Brochure sent to your email!'); this.closest('.ce-modal').style.display='none';">Get Brochure</button>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+// Modal show/hide
+document.querySelectorAll('.ce-modal').forEach(function(m) {
+    var observer = new MutationObserver(function() {
+        m.style.display = m.getAttribute('aria-hidden') === 'false' ? 'block' : 'none';
+    });
+    observer.observe(m, { attributes: true, attributeFilter: ['aria-hidden'] });
+});
+
+// Calculator
+(function() {
+    var input = document.getElementById('calc-price-input');
+    if (!input) return;
+    var output = document.getElementById('ce-calculator-output');
+    input.addEventListener('input', function() {
+        var p = parseFloat(this.value) || 0;
+        output.querySelector('[data-calc="price"]').textContent = Math.round(p).toLocaleString();
+        output.querySelector('[data-calc="reg-fee"]').textContent = Math.round(p * 0.025).toLocaleString();
+        output.querySelector('[data-calc="vat"]').textContent = Math.round(p * 0.05).toLocaleString();
+        output.querySelector('[data-calc="agency-fee"]').textContent = Math.round(p * 0.02).toLocaleString();
+        output.querySelector('[data-calc="total"]').textContent = Math.round(p * 1.095).toLocaleString();
+    });
+})();
+
+// Currency toggle
+(function() {
+    var rates = { GBP_SAR: 4.68, USD_SAR: 3.75 };
+    document.querySelectorAll('.ce-currency-toggle__option').forEach(function(t) {
+        t.addEventListener('click', function() {
+            document.querySelectorAll('.ce-currency-toggle__option').forEach(function(o) { o.classList.remove('active'); });
+            this.classList.add('active');
+            var cur = this.textContent.trim();
+            document.querySelectorAll('[data-price]').forEach(function(el) {
+                var sar = parseFloat(el.getAttribute('data-price'));
+                var symbols = { GBP: '£', SAR: 'SAR ', USD: '$' };
+                var converted = sar;
+                if (cur === 'GBP') converted = sar / rates.GBP_SAR;
+                if (cur === 'USD') converted = sar / rates.USD_SAR;
+                el.textContent = (symbols[cur] || '') + Math.round(converted).toLocaleString();
+            });
+        });
+    });
+})();
+
+// City filter
+(function() {
+    document.querySelectorAll('.ce-filter-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.ce-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            var city = this.getAttribute('data-filter');
+            var section = this.closest('.ce-section') || this.closest('section');
+            if (!section) return;
+            section.querySelectorAll('.ce-property-card').forEach(function(card) {
+                card.style.display = (city === 'all' || card.getAttribute('data-city') === city) ? '' : 'none';
+            });
+        });
+    });
+})();
+
+// 3D Scenes
+(function() {
+    if (!window.THREE) return;
+
+    // Hero scene
+    var heroEl = document.getElementById('ce-3d-hero');
+    if (heroEl) {
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(50, heroEl.clientWidth / heroEl.clientHeight, 0.1, 1000);
+        camera.position.set(0, 3, 12);
+        var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(heroEl.clientWidth, heroEl.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        heroEl.appendChild(renderer.domElement);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        var gold = new THREE.DirectionalLight(0xC4973A, 0.8);
+        gold.position.set(5, 10, 5);
+        scene.add(gold);
+
+        var mat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.3, roughness: 0.7 });
+        for (var i = 0; i < 30; i++) {
+            var w = 0.3 + Math.random() * 0.7, h = 1 + Math.random() * 5, d = 0.3 + Math.random() * 0.7;
+            var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+            m.position.set((Math.random() - 0.5) * 20, h / 2, (Math.random() - 0.5) * 10 - 5);
+            scene.add(m);
+        }
+
+        // Gold particles
+        var pCount = 150, pSpread = 25;
+        var pGeo = new THREE.BufferGeometry();
+        var pPos = new Float32Array(pCount * 3);
+        var pVel = new Float32Array(pCount * 3);
+        for (var j = 0; j < pCount * 3; j += 3) {
+            pPos[j] = (Math.random() - 0.5) * pSpread;
+            pPos[j+1] = (Math.random() - 0.5) * pSpread;
+            pPos[j+2] = (Math.random() - 0.5) * pSpread;
+            pVel[j+1] = Math.random() * 0.005 + 0.002;
+        }
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        var pMat = new THREE.PointsMaterial({ color: 0xC4973A, size: 0.04, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false });
+        var points = new THREE.Points(pGeo, pMat);
+        scene.add(points);
+
+        var t = 0;
+        function animateHero() {
+            requestAnimationFrame(animateHero);
+            t += 0.003;
+            camera.position.x = Math.sin(t) * 12;
+            camera.position.z = Math.cos(t) * 12;
+            camera.lookAt(0, 2, 0);
+            var pos = pGeo.attributes.position.array;
+            for (var k = 0; k < pCount * 3; k += 3) { pos[k+1] += pVel[k+1]; if (pos[k+1] > pSpread/2) pos[k+1] = -pSpread/2; }
+            pGeo.attributes.position.needsUpdate = true;
+            renderer.render(scene, camera);
+        }
+        animateHero();
+    }
+
+    // Projects map
+    var mapEl = document.getElementById('ce-3d-projects-map');
+    if (mapEl) {
+        var s2 = new THREE.Scene();
+        var c2 = new THREE.PerspectiveCamera(45, mapEl.clientWidth / mapEl.clientHeight, 0.1, 1000);
+        c2.position.set(0, 8, 8);
+        var r2 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        r2.setSize(mapEl.clientWidth, mapEl.clientHeight);
+        r2.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        mapEl.appendChild(r2.domElement);
+        s2.add(new THREE.AmbientLight(0xffffff, 0.5));
+        var dl = new THREE.DirectionalLight(0xC4973A, 0.6); dl.position.set(3, 10, 5); s2.add(dl);
+        var gnd = new THREE.Mesh(new THREE.PlaneGeometry(16, 10), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.9 }));
+        gnd.rotation.x = -Math.PI / 2; s2.add(gnd);
+        var pm = new THREE.MeshStandardMaterial({ color: 0xC4973A, emissive: 0xC4973A, emissiveIntensity: 0.5 });
+        [{x:1,z:-1},{x:-4,z:1},{x:-5,z:-3},{x:-3,z:-2}].forEach(function(c) {
+            var pin = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), pm);
+            pin.position.set(c.x, 0.15, c.z); s2.add(pin);
+        });
+        var t2 = 0;
+        function animateMap() { requestAnimationFrame(animateMap); t2 += 0.005; c2.position.x = Math.sin(t2*0.3)*2; c2.lookAt(0,0,0); r2.render(s2, c2); }
+        animateMap();
+    }
+
+    // Journey scene
+    var jEl = document.getElementById('ce-3d-journey');
+    if (jEl) {
+        var s3 = new THREE.Scene();
+        var c3 = new THREE.PerspectiveCamera(50, jEl.clientWidth / jEl.clientHeight, 0.1, 1000);
+        c3.position.set(0, 4, 10);
+        var r3 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        r3.setSize(jEl.clientWidth, jEl.clientHeight);
+        r3.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        jEl.appendChild(r3.domElement);
+        s3.add(new THREE.AmbientLight(0xffffff, 0.6));
+        var pl = new THREE.PointLight(0xC4973A, 1, 50); pl.position.set(0, 5, 5); s3.add(pl);
+        var pts = [new THREE.Vector3(-6,0,0), new THREE.Vector3(-3,1,-2), new THREE.Vector3(0,2,0), new THREE.Vector3(3,1,-2), new THREE.Vector3(6,0,0)];
+        var curve = new THREE.CatmullRomCurve3(pts);
+        s3.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 100, 0.02, 8, false), new THREE.MeshBasicMaterial({ color: 0xC4973A })));
+        var mm = new THREE.MeshStandardMaterial({ color: 0xC4973A, emissive: 0xC4973A, emissiveIntensity: 0.3 });
+        pts.forEach(function(p) { var mk = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), mm); mk.position.copy(p); s3.add(mk); });
+        var t3 = 0;
+        function animateJourney() { requestAnimationFrame(animateJourney); t3 += 0.002; var p = curve.getPoint((Math.sin(t3)+1)/2); c3.position.set(p.x, p.y+3, p.z+8); c3.lookAt(p); r3.render(s3, c3); }
+        animateJourney();
+    }
+})();
+</script>
+</body>
+</html>
