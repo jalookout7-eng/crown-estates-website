@@ -31,7 +31,6 @@ add_action('widgets_init', 'ce_widgets_init');
 
 // Includes
 require get_template_directory() . '/inc/enqueue.php';
-// Uncomment as files are created:
 require get_template_directory() . '/inc/cpt-property.php';
 require get_template_directory() . '/inc/cpt-testimonial.php';
 require get_template_directory() . '/inc/taxonomy-city.php';

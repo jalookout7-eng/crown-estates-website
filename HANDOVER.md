@@ -1,7 +1,7 @@
 # Crowns Estates Website — Session Handover
 
-**Last Updated:** 2026-04-02
-**Sessions:** 3
+**Last Updated:** 2026-04-04
+**Sessions:** 4
 **Repo:** https://github.com/jalookout7-eng/crown-estates-website
 **Domain:** www.crownsestates.co.uk
 **Local path (current machine):** `/Users/farhanraiss/crown-estates-website`
@@ -25,7 +25,7 @@ A WordPress website for **Crowns Estates** — a UK-registered real estate agenc
 
 ---
 
-## Current State (After Session 3)
+## Current State (After Session 4)
 
 ### What Exists in the Repo
 
@@ -336,3 +336,28 @@ Then read:
 - Connected Figma MCP server for bidirectional design/code workflow
 - Cloned repo to new machine (`/Users/farhanraiss/crown-estates-website`)
 - **Status:** v2 spec approved. Next: write v2 implementation plan, begin building.
+
+### Session 4 — 2026-04-04
+- Wrote v2 implementation plan (16 tasks, `docs/superpowers/plans/2026-04-02-crowns-estates-implementation-v2.md`)
+- Executed all 16 tasks via subagent-driven development on `feat/v2-backend-and-3d` branch (15 commits)
+- **Backend built:**
+  - `functions.php` refactored with 11 modular includes
+  - CPTs: `ce_property`, `ce_testimonial` + `ce_city` taxonomy
+  - ACF field groups: 18 property fields, 7 testimonial fields, 3 options pages (exchange rates, calculator, general settings)
+  - Multi-currency helpers + REST endpoint (`/ce/v1/rates`)
+  - Enquiry handler: REST endpoint (`/ce/v1/enquiry`), DB table, admin notification + auto-responder, brochure gate
+  - Schema.org JSON-LD (RealEstateAgent sitewide, RealEstateListing on property pages)
+  - GTM integration (placeholder container ID)
+- **Template parts:** 9 reusable components (property-card, testimonial-card, hero, trust-bar, cta-banner, modals, whatsapp-button, developer-badge)
+- **JavaScript modules:** 7 front-end (modal, currency-toggle, calculator, city-filter, faq-accordion, ga4-events, admin-dashboard)
+- **Page templates refactored:** front-page.php, page-projects.php, footer.php now use dynamic WP_Query + template parts
+- **New templates:** single-ce_property.php (full detail page), archive-ce_property.php (redirect), archive.php, single.php, sidebar.php
+- **Custom admin dashboard:** Branded backend with stat cards, sparkline charts, reorganised sidebar, dark/gold colour scheme
+- **3D immersive layer built:**
+  - Core: scene-manager.js, scroll-controller.js, particles.js, fallback.js
+  - Page scenes: hero-scene.js (procedural cityscape), projects-map.js (city pins), journey-scene.js (golden path), property-viewer.js (GLTF orbit)
+  - CDN enqueue: Three.js 0.162, GSAP 3.12.5, ScrollTrigger, Lenis 1.1.1
+  - WebGL fallback + low-power device detection
+- **Sample content:** 5 blog posts (markdown), placeholder SVG images
+- **Known TODO:** `screenshot.png` needs real PNG binary (currently SVG placeholder)
+- **Status:** Full backend + 3D layer built. Branch `feat/v2-backend-and-3d` ready for review/merge. Next: WordPress deployment, real content entry, Figma design system.
