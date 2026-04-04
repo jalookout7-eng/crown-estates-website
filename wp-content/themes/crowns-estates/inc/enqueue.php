@@ -42,6 +42,32 @@ function ce_enqueue_assets() {
     if (is_page('projects')) {
         wp_enqueue_script('ce-city-filter', get_template_directory_uri() . '/js/city-filter.js', [], '1.0', true);
     }
+
+    // 3D Libraries — loaded on all pages (lightweight until scene-specific scripts activate them)
+    wp_enqueue_script('threejs', 'https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js', [], '0.162.0', true);
+    wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', [], '3.12.5', true);
+    wp_enqueue_script('gsap-scrolltrigger', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js', ['gsap'], '3.12.5', true);
+    wp_enqueue_script('lenis', 'https://cdn.jsdelivr.net/npm/lenis@1.1.1/dist/lenis.min.js', [], '1.1.1', true);
+
+    // 3D Core
+    wp_enqueue_script('ce-3d-fallback', get_template_directory_uri() . '/js/3d/fallback.js', [], '1.0', true);
+    wp_enqueue_script('ce-3d-scene-manager', get_template_directory_uri() . '/js/3d/scene-manager.js', ['threejs'], '1.0', true);
+    wp_enqueue_script('ce-3d-scroll-controller', get_template_directory_uri() . '/js/3d/scroll-controller.js', ['gsap', 'gsap-scrolltrigger', 'lenis'], '1.0', true);
+    wp_enqueue_script('ce-3d-particles', get_template_directory_uri() . '/js/3d/particles.js', ['threejs'], '1.0', true);
+
+    // Page-specific 3D scenes
+    if (is_front_page()) {
+        wp_enqueue_script('ce-3d-hero-scene', get_template_directory_uri() . '/js/3d/hero-scene.js', ['ce-3d-scene-manager', 'ce-3d-scroll-controller', 'ce-3d-particles'], '1.0', true);
+    }
+    if (is_page('projects')) {
+        wp_enqueue_script('ce-3d-projects-map', get_template_directory_uri() . '/js/3d/projects-map.js', ['ce-3d-scene-manager', 'ce-3d-scroll-controller'], '1.0', true);
+    }
+    if (is_singular('ce_property')) {
+        wp_enqueue_script('ce-3d-property-viewer', get_template_directory_uri() . '/js/3d/property-viewer.js', ['ce-3d-scene-manager'], '1.0', true);
+    }
+    if (is_page('how-it-works')) {
+        wp_enqueue_script('ce-3d-journey-scene', get_template_directory_uri() . '/js/3d/journey-scene.js', ['ce-3d-scene-manager', 'ce-3d-scroll-controller', 'ce-3d-particles'], '1.0', true);
+    }
 }
 add_action('wp_enqueue_scripts', 'ce_enqueue_assets');
 
