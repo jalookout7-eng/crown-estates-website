@@ -9,6 +9,7 @@
         'cta_url'  => home_url('/projects'),
         'bg_image' => 'https://images.unsplash.com/photo-1578895101408-1a36b834405b?w=1920&q=80',
     ]); ?>
+    <div id="ce-3d-hero" class="ce-3d-canvas"></div>
 
     <?php get_template_part('template-parts/trust-bar'); ?>
 

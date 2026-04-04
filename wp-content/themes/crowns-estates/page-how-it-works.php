@@ -10,6 +10,8 @@
         </div>
     </div>
 
+    <div id="ce-3d-journey" class="ce-3d-canvas ce-3d-canvas--journey" style="height: 400px; position: relative;"></div>
+
     <!-- STEPS -->
     <section class="ce-section">
         <div class="ce-container">

@@ -6,6 +6,7 @@
         'subtitle' => 'Explore our curated selection of Saudi Arabian property investment opportunities.',
         'label'    => 'Projects',
     ]); ?>
+    <div id="ce-3d-projects-map" class="ce-3d-canvas ce-3d-canvas--map" style="height: 300px; position: relative;"></div>
 
     <section class="ce-section">
         <div class="ce-container">
