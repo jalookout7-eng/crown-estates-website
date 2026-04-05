@@ -102,7 +102,7 @@ function ce_render_dashboard_widget(): void {
             <a href="<?php echo esc_url(admin_url('post-new.php')); ?>" class="ce-admin-action-link">+ Add Blog Post</a>
             <a href="<?php echo esc_url($admin_url); ?>" class="ce-admin-action-link">View Enquiries <?php if ($new_enquiries): ?>(<?php echo $new_enquiries; ?> new)<?php endif; ?></a>
             <?php if (current_user_can('manage_options')): ?>
-            <a href="<?php echo esc_url(rest_url('ce/v1/enquiries/export')); ?>" class="ce-admin-action-link ce-admin-action-link--gold">↓ Export CSV</a>
+            <a href="<?php echo esc_url(add_query_arg('_wpnonce', wp_create_nonce('wp_rest'), rest_url('ce/v1/enquiries/export'))); ?>" class="ce-admin-action-link ce-admin-action-link--gold">↓ Export CSV</a>
             <?php endif; ?>
         </div>
     </div>

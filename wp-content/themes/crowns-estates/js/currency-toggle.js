@@ -27,14 +27,15 @@
 
   function convert(amount, from, to) {
     if (from === to || !rates) return amount;
-    // Convert to SAR first, then to target
-    var inSar = amount;
-    if (from === 'GBP') inSar = amount * rates.GBP_SAR;
-    if (from === 'USD') inSar = amount * rates.USD_SAR;
+    // API returns { GBP: 1, SAR: 4.68, USD: 1.27 } (GBP base)
+    // Convert to GBP first, then to target currency
+    var inGbp = amount;
+    if (from === 'SAR') inGbp = amount / rates.SAR;
+    if (from === 'USD') inGbp = amount / rates.USD;
 
-    if (to === 'SAR') return inSar;
-    if (to === 'GBP') return inSar / rates.GBP_SAR;
-    if (to === 'USD') return inSar / rates.USD_SAR;
+    if (to === 'GBP') return inGbp;
+    if (to === 'SAR') return inGbp * rates.SAR;
+    if (to === 'USD') return inGbp * rates.USD;
     return amount;
   }
 

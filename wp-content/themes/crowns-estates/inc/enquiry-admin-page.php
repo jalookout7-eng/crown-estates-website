@@ -33,7 +33,7 @@ function ce_render_enquiries_admin_page(): void {
         $like = '%' . $wpdb->esc_like($search) . '%'; $params[] = $like; $params[] = $like;
     }
 
-    $total_query  = $params ? $wpdb->prepare("SELECT COUNT(*) FROM $table $where", ...$params) : "SELECT COUNT(*) FROM $table $where";
+    $total_query  = $params ? $wpdb->prepare("SELECT COUNT(*) FROM $table $where", ...$params) : $wpdb->prepare("SELECT COUNT(*) FROM $table $where");
     $total        = (int) $wpdb->get_var($total_query);
     $data_query   = $params
         ? $wpdb->prepare("SELECT * FROM $table $where ORDER BY created_at DESC LIMIT %d OFFSET %d", ...[...$params, $per, $offset])
@@ -50,7 +50,7 @@ function ce_render_enquiries_admin_page(): void {
     <div class="wrap">
         <h1 class="wp-heading-inline">Enquiries</h1>
         <?php if (current_user_can('manage_options')): ?>
-        <a href="<?php echo esc_url(rest_url('ce/v1/enquiries/export')); ?>" class="page-title-action" style="background:#C4973A;color:#fff;border-color:#C4973A">↓ Export CSV</a>
+        <a href="<?php echo esc_url(add_query_arg('_wpnonce', wp_create_nonce('wp_rest'), rest_url('ce/v1/enquiries/export'))); ?>" class="page-title-action" style="background:#C4973A;color:#fff;border-color:#C4973A">↓ Export CSV</a>
         <?php endif; ?>
 
         <ul class="subsubsub" style="margin:12px 0">

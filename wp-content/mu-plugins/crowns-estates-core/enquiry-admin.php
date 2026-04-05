@@ -58,7 +58,7 @@ function ce_rest_get_enquiries(WP_REST_Request $request): WP_REST_Response {
 
     $total_query = $params
         ? $wpdb->prepare("SELECT COUNT(*) FROM $table $where", ...$params)
-        : "SELECT COUNT(*) FROM $table $where";
+        : $wpdb->prepare("SELECT COUNT(*) FROM $table $where");
     $total = (int) $wpdb->get_var($total_query);
 
     $data_query = $params

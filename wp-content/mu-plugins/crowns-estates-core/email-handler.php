@@ -78,7 +78,9 @@ add_action('init', 'ce_schedule_digest_cron');
 function ce_schedule_digest_cron(): void {
     $enabled = function_exists('get_field') && get_field('ce_digest_enabled', 'option');
     if ($enabled && !wp_next_scheduled('ce_daily_digest_event')) {
-        wp_schedule_event(strtotime('today 08:00 UTC'), 'daily', 'ce_daily_digest_event');
+        $time_str = function_exists('get_field') ? (get_field('ce_digest_time', 'option') ?: '08:00') : '08:00';
+        $time_str = preg_match('/^\d{2}:\d{2}$/', $time_str) ? $time_str : '08:00';
+        wp_schedule_event(strtotime('today ' . $time_str . ' UTC'), 'daily', 'ce_daily_digest_event');
     }
     if (!$enabled) {
         wp_clear_scheduled_hook('ce_daily_digest_event');

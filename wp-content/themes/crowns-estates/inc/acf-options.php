@@ -16,9 +16,9 @@ add_action('acf/init', function (): void {
         'position'   => 30,
     ]);
 
-    acf_add_options_sub_page(['page_title' => 'Exchange Rates',   'menu_title' => 'Exchange Rates',   'parent_slug' => 'ce-site-settings']);
-    acf_add_options_sub_page(['page_title' => 'Calculator',       'menu_title' => 'Calculator',       'parent_slug' => 'ce-site-settings']);
-    acf_add_options_sub_page(['page_title' => 'Content & Legal',  'menu_title' => 'Content & Legal',  'parent_slug' => 'ce-site-settings']);
+    acf_add_options_sub_page(['page_title' => 'Exchange Rates',  'menu_title' => 'Exchange Rates',  'menu_slug' => 'acf-options-exchange-rates',   'parent_slug' => 'ce-site-settings']);
+    acf_add_options_sub_page(['page_title' => 'Calculator',      'menu_title' => 'Calculator',      'menu_slug' => 'acf-options-calculator',        'parent_slug' => 'ce-site-settings']);
+    acf_add_options_sub_page(['page_title' => 'Content & Legal', 'menu_title' => 'Content & Legal', 'menu_slug' => 'acf-options-content-legal',     'parent_slug' => 'ce-site-settings']);
 });
 
 add_action('acf/init', function (): void {
@@ -35,6 +35,7 @@ add_action('acf/init', function (): void {
             ['key' => 'field_ce_admin_notification_email',  'label' => 'Admin Notification Email',  'name' => 'ce_admin_notification_email',  'type' => 'email'],
             ['key' => 'field_ce_digest_recipient_email',    'label' => 'Digest Recipient Email',    'name' => 'ce_digest_recipient_email',    'type' => 'email'],
             ['key' => 'field_ce_digest_enabled',            'label' => 'Digest Enabled',            'name' => 'ce_digest_enabled',            'type' => 'true_false', 'default_value' => 1],
+            ['key' => 'field_ce_digest_time',              'label' => 'Digest Time (UTC)',          'name' => 'ce_digest_time',               'type' => 'text', 'default_value' => '08:00', 'instructions' => 'Time to send daily digest e.g. 08:00'],
             ['key' => 'field_ce_office_address',            'label' => 'Office Address',            'name' => 'ce_office_address',            'type' => 'textarea'],
         ],
         'location' => [[['param' => 'options_page', 'operator' => '==', 'value' => 'ce-site-settings']]],
@@ -61,7 +62,7 @@ add_action('acf/init', function (): void {
             ['key' => 'field_ce_calc_vat',              'label' => 'VAT (%)',               'name' => 'ce_calc_vat',              'type' => 'number', 'step' => 0.1, 'default_value' => 5],
             ['key' => 'field_ce_calc_agency_fee',       'label' => 'Agency Fee (%)',        'name' => 'ce_calc_agency_fee',       'type' => 'number', 'step' => 0.1, 'default_value' => 2],
         ],
-        'location' => [[['param' => 'options_page', 'operator' => '==', 'value' => 'acf-options-calculator-settings']]],
+        'location' => [[['param' => 'options_page', 'operator' => '==', 'value' => 'acf-options-calculator']]],
     ]);
 
     // Content & Legal

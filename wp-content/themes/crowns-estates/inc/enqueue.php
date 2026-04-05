@@ -37,13 +37,6 @@ function ce_enqueue_assets() {
     // Calculator — How It Works page only
     if (is_page('how-it-works')) {
         wp_enqueue_script('ce-calculator', get_template_directory_uri() . '/js/calculator.js', [], '1.0', true);
-        $calc_rates = [
-            'registration_fee' => function_exists('get_field') ? (float) get_field('ce_calc_registration_fee', 'option') ?: 2.5 : 2.5,
-            'vat'              => function_exists('get_field') ? (float) get_field('ce_calc_vat', 'option') ?: 5 : 5,
-            'agency_fee'       => function_exists('get_field') ? (float) get_field('ce_calc_agency_fee', 'option') ?: 2 : 2,
-        ];
-        wp_localize_script('ce-calculator', 'ceCalcRates', $calc_rates);
-
         wp_enqueue_script('ce-faq-accordion', get_template_directory_uri() . '/js/faq-accordion.js', [], '1.0', true);
     }
 

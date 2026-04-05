@@ -7,7 +7,7 @@ add_action('wp_head', function (): void {
 
     // ── Sitewide: RealEstateAgent ────────���─────────────────────────────────
     $office_address = function_exists('get_field') ? (get_field('ce_office_address', 'option') ?: '') : '';
-    $schemas[] = [
+    $agent = [
         '@context'    => 'https://schema.org',
         '@type'       => 'RealEstateAgent',
         'name'        => 'Crowns Estates',
@@ -15,8 +15,11 @@ add_action('wp_head', function (): void {
         'email'       => 'info@crownsestates.co.uk',
         'description' => 'UK-registered real estate agency specialising in Saudi Arabian property investment.',
         'areaServed'  => 'Saudi Arabia',
-        'address'     => $office_address ? ['@type' => 'PostalAddress', 'streetAddress' => $office_address] : null,
     ];
+    if ($office_address) {
+        $agent['address'] = ['@type' => 'PostalAddress', 'streetAddress' => $office_address];
+    }
+    $schemas[] = $agent;
 
     // ── Single Property: RealEstateListing ───────────��────────────────────
     if (is_singular('ce_property')) {
