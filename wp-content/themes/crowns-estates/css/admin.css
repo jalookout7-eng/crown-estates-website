@@ -479,3 +479,108 @@ div.error {
 div.updated a {
     color: #C4973A !important;
 }
+
+/* ── Post Edit Screen + Metaboxes ────────────────────────────────────────── */
+.wp-admin.post-php #poststuff,
+.wp-admin.post-new-php #poststuff {
+    background: transparent;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.postbox {
+    background: #FFFFFF !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+    margin-bottom: 16px !important;
+}
+
+.postbox .postbox-header,
+.postbox h2.hndle,
+.postbox h3.hndle {
+    background: #FAFAFA !important;
+    border-bottom: 1px solid #E8E8E8 !important;
+    border-left: 3px solid #C4973A !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 10px 14px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #0A0A0A !important;
+}
+
+.postbox .postbox-header .hndle,
+.postbox h2.hndle span,
+.postbox h3.hndle span {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #0A0A0A !important;
+}
+
+.postbox .inside {
+    padding: 14px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    color: #0A0A0A !important;
+}
+
+#submitdiv .postbox-header {
+    border-left-color: #C4973A !important;
+}
+
+#submitdiv #misc-publishing-actions,
+#submitdiv #major-publishing-actions {
+    background: #FAFAFA !important;
+    border-color: #E8E8E8 !important;
+    padding: 10px 14px !important;
+}
+
+#submitdiv #publishing-action {
+    float: right;
+}
+
+#title,
+#titlewrap #title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: #0A0A0A !important;
+    border-color: #E8E8E8 !important;
+    background: #FFFFFF !important;
+    padding: 10px 14px !important;
+    border-radius: 4px !important;
+}
+
+#title:focus {
+    border-color: #C4973A !important;
+    box-shadow: 0 0 0 2px rgba(196,151,58,0.15) !important;
+}
+
+.acf-postbox .postbox-header {
+    border-left-color: #C4973A !important;
+}
+
+.acf-field .acf-label label {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    color: #0A0A0A !important;
+    font-size: 13px !important;
+}
+
+.acf-field .acf-input input,
+.acf-field .acf-input textarea,
+.acf-field .acf-input select {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    border-color: #E8E8E8 !important;
+    border-radius: 4px !important;
+    color: #0A0A0A !important;
+}
+
+.acf-field .acf-input input:focus,
+.acf-field .acf-input textarea:focus,
+.acf-field .acf-input select:focus {
+    border-color: #C4973A !important;
+    box-shadow: 0 0 0 2px rgba(196,151,58,0.15) !important;
+}
