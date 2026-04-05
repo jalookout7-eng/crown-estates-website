@@ -198,3 +198,73 @@ body.wp-admin,
 #wpfooter a {
     color: #C4973A;
 }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.wp-core-ui .button-primary,
+.wp-core-ui input[type="submit"].button-primary,
+#publish {
+    background: #C4973A !important;
+    border-color: #C4973A !important;
+    color: #FFFFFF !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    padding: 6px 16px !important;
+    height: auto !important;
+    line-height: 1.6 !important;
+    transition: background 0.2s, box-shadow 0.2s !important;
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui input[type="submit"].button-primary:hover,
+#publish:hover {
+    background: #B8892E !important;
+    border-color: #B8892E !important;
+    box-shadow: 0 2px 8px rgba(196,151,58,0.3) !important;
+}
+
+.wp-core-ui .button-primary:focus,
+#publish:focus {
+    box-shadow: 0 0 0 2px rgba(196,151,58,0.4) !important;
+    outline: none !important;
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-secondary {
+    background: #FFFFFF !important;
+    border-color: #E8E8E8 !important;
+    color: #0A0A0A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    padding: 6px 16px !important;
+    height: auto !important;
+    line-height: 1.6 !important;
+    transition: border-color 0.2s !important;
+}
+
+.wp-core-ui .button:hover,
+.wp-core-ui .button-secondary:hover {
+    background: #FAFAFA !important;
+    border-color: #C4973A !important;
+    color: #C4973A !important;
+}
+
+.wp-core-ui .button.button-link-delete,
+a.submitdelete {
+    color: #EF4444 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.wp-core-ui .button.button-link-delete:hover,
+a.submitdelete:hover {
+    color: #DC2626 !important;
+    text-decoration: underline !important;
+}
