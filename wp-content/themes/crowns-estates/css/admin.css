@@ -318,3 +318,120 @@ a.submitdelete:hover {
 .wp-admin input[type="radio"] {
     accent-color: #C4973A;
 }
+
+/* ── WP List Tables ───────────────────────────────────────────────────────── */
+.wp-list-table {
+    background: #FFFFFF !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 6px !important;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+}
+
+.wp-list-table thead th,
+.wp-list-table thead td {
+    background: #FAFAFA !important;
+    border-bottom: 2px solid #C4973A !important;
+    color: #0A0A0A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 10px 12px !important;
+}
+
+.wp-list-table thead th a {
+    color: #0A0A0A !important;
+}
+
+.wp-list-table thead th.sorted a,
+.wp-list-table thead th.sorting a {
+    color: #C4973A !important;
+}
+
+.wp-list-table tbody tr {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #E8E8E8 !important;
+    transition: background 0.15s;
+}
+
+.wp-list-table tbody tr:hover {
+    background: rgba(196,151,58,0.04) !important;
+}
+
+.wp-list-table tbody tr.alternate {
+    background: #FAFAFA !important;
+}
+
+.wp-list-table tbody tr.alternate:hover {
+    background: rgba(196,151,58,0.04) !important;
+}
+
+.wp-list-table td,
+.wp-list-table th.check-column {
+    color: #0A0A0A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+}
+
+.wp-list-table .row-actions span a {
+    color: #666666 !important;
+    font-size: 12px;
+}
+
+.wp-list-table .row-actions span a:hover {
+    color: #C4973A !important;
+}
+
+.wp-list-table .row-actions .trash a,
+.wp-list-table .row-actions .delete a {
+    color: #EF4444 !important;
+}
+
+.wp-list-table .column-title a.row-title,
+.wp-list-table strong a {
+    color: #0A0A0A !important;
+    font-weight: 500 !important;
+}
+
+.wp-list-table .column-title a.row-title:hover,
+.wp-list-table strong a:hover {
+    color: #C4973A !important;
+}
+
+.tablenav {
+    background: transparent !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.tablenav .tablenav-pages a,
+.tablenav .tablenav-pages span.current {
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.tablenav .tablenav-pages span.current {
+    background: #C4973A !important;
+    border-color: #C4973A !important;
+    color: #FFFFFF !important;
+}
+
+.tablenav .bulkactions select {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+}
+
+.subsubsub a {
+    color: #666666 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+}
+
+.subsubsub a.current {
+    color: #C4973A !important;
+    font-weight: 600 !important;
+}
