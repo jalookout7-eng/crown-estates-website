@@ -140,3 +140,61 @@
 #collapse-button:hover {
     color: #C4973A !important;
 }
+
+/* ── Page Background + Layout ────────────────────────────────────────────── */
+body.wp-admin,
+#wpwrap,
+#wpcontent,
+#wpbody,
+#wpbody-content {
+    background: #FAFAFA !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.wrap h1,
+.wrap h1.wp-heading-inline {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: #0A0A0A !important;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #C4973A;
+    margin-bottom: 16px;
+}
+
+.wrap h2 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #0A0A0A !important;
+}
+
+.page-title-action {
+    background: #C4973A !important;
+    border-color: #C4973A !important;
+    color: #FFFFFF !important;
+    border-radius: 4px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    padding: 4px 12px !important;
+}
+
+.page-title-action:hover {
+    background: #B8892E !important;
+    border-color: #B8892E !important;
+    color: #FFFFFF !important;
+}
+
+#wpfooter {
+    border-top: 1px solid #E8E8E8;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #999999;
+}
+
+#wpfooter a {
+    color: #C4973A;
+}
