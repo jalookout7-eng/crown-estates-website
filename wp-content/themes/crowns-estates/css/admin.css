@@ -584,3 +584,83 @@ div.updated a {
     border-color: #C4973A !important;
     box-shadow: 0 0 0 2px rgba(196,151,58,0.15) !important;
 }
+
+/* ── ACF Options Pages ───────────────────────────────────────────────────── */
+.acf-options-page .acf-fields {
+    background: #FFFFFF !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 6px !important;
+}
+
+.acf-field {
+    border-color: #E8E8E8 !important;
+}
+
+.acf-field:first-child {
+    border-top: none !important;
+}
+
+.acf-tab-wrap .acf-tab-group {
+    border-color: #E8E8E8 !important;
+    background: #FAFAFA !important;
+}
+
+.acf-tab-wrap .acf-tab-group li a {
+    color: #666666 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    border-color: #E8E8E8 !important;
+}
+
+.acf-tab-wrap .acf-tab-group li.active a {
+    color: #C4973A !important;
+    border-bottom-color: #C4973A !important;
+    font-weight: 600 !important;
+}
+
+/* ── Dashboard Widget Polish ─────────────────────────────────────────────── */
+#ce_dashboard_main .postbox-header {
+    border-left-color: #C4973A !important;
+}
+
+/* ── Scrollbar (Webkit) ──────────────────────────────────────────────────── */
+.wp-admin ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.wp-admin ::-webkit-scrollbar-track {
+    background: #FAFAFA;
+}
+
+.wp-admin ::-webkit-scrollbar-thumb {
+    background: #E8E8E8;
+    border-radius: 3px;
+}
+
+.wp-admin ::-webkit-scrollbar-thumb:hover {
+    background: #C4973A;
+}
+
+/* ── Media Library ───────────────────────────────────────────────────────── */
+.media-modal .media-frame-title h1 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    color: #0A0A0A !important;
+}
+
+/* ── Screen Options + Help Tabs ─────────────────────────────────────────── */
+#screen-options-link-wrap a,
+#contextual-help-link-wrap a {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    color: #666666 !important;
+    background: #FFFFFF !important;
+    border-color: #E8E8E8 !important;
+}
+
+#screen-options-link-wrap a:hover,
+#contextual-help-link-wrap a:hover {
+    color: #C4973A !important;
+    border-color: #C4973A !important;
+}
