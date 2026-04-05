@@ -68,3 +68,75 @@
     color: var(--ce-gold) !important;
     font-weight: 500;
 }
+
+/* ── Sidebar Navigation ───────────────────────────────────────────────────── */
+#adminmenuback,
+#adminmenuwrap {
+    background: #1A1A1A !important;
+}
+
+#adminmenu,
+#adminmenu * {
+    font-family: 'Inter', sans-serif !important;
+}
+
+#adminmenu li a,
+#adminmenu li .wp-menu-name {
+    color: #CCCCCC !important;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+#adminmenu li:hover > a,
+#adminmenu li:hover .wp-menu-name,
+#adminmenu li > a:focus {
+    color: #FFFFFF !important;
+    background: rgba(196,151,58,0.15) !important;
+}
+
+#adminmenu .wp-has-current-submenu .wp-submenu-head,
+#adminmenu a.wp-has-current-submenu,
+#adminmenu li.current > a,
+#adminmenu .current .wp-menu-name {
+    background: #C4973A !important;
+    color: #FFFFFF !important;
+    font-weight: 500 !important;
+}
+
+#adminmenu .wp-has-current-submenu .wp-submenu-head::before,
+#adminmenu li.current > a::before {
+    color: #FFFFFF !important;
+}
+
+#adminmenu .wp-submenu {
+    background: #111111 !important;
+}
+
+#adminmenu .wp-submenu li a {
+    color: #AAAAAA !important;
+    font-size: 12px;
+}
+
+#adminmenu .wp-submenu li a:hover,
+#adminmenu .wp-submenu li.current a {
+    color: #C4973A !important;
+    background: transparent !important;
+}
+
+#adminmenu .menu-icon-generic div.wp-menu-image:before,
+#adminmenu div.wp-menu-image:before {
+    color: #888888 !important;
+}
+
+#adminmenu li.current div.wp-menu-image:before,
+#adminmenu li:hover div.wp-menu-image:before {
+    color: #FFFFFF !important;
+}
+
+#collapse-button {
+    color: #888888 !important;
+}
+
+#collapse-button:hover {
+    color: #C4973A !important;
+}
