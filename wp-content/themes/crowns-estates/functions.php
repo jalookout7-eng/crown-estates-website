@@ -42,3 +42,4 @@ require get_template_directory() . '/inc/enquiry-handler.php';
 require get_template_directory() . '/inc/schema-markup.php';
 require get_template_directory() . '/inc/admin-dashboard.php';
 require get_template_directory() . '/inc/ga4-tracking.php';
+require get_template_directory() . '/inc/admin-styles.php';
