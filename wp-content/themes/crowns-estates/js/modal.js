@@ -67,8 +67,11 @@
     new FormData(form).forEach(function (value, key) {
       data[key] = key === 'gdpr_consent' ? true : value;
     });
+    // Include nonce for REST API verification
+    if (window.CE && CE.nonce) data.nonce = CE.nonce;
 
-    fetch(endpoint, {
+    var url = (window.CE ? CE.restUrl : '/wp-json/ce/v1/') + endpoint.replace(/.*\/ce\/v1\//, '');
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

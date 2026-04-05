@@ -55,7 +55,7 @@
   }
 
   // Fetch rates then apply saved preference
-  var restUrl = (window.ceData && window.ceData.restUrl) || '/wp-json/ce/v1/';
+  var restUrl = (window.CE && CE.restUrl) || '/wp-json/ce/v1/';
   fetch(restUrl + 'rates')
     .then(function (r) { return r.json(); })
     .then(function (data) {

@@ -14,13 +14,22 @@ function ce_enqueue_assets() {
 
     // Currency toggle — all pages
     wp_enqueue_script('ce-currency-toggle', get_template_directory_uri() . '/js/currency-toggle.js', [], '1.0', true);
-    wp_localize_script('ce-currency-toggle', 'ceData', [
-        'restUrl' => esc_url_raw(rest_url('ce/v1/')),
-        'nonce'   => wp_create_nonce('wp_rest'),
-    ]);
 
     // Modal — all pages
     wp_enqueue_script('ce-modal', get_template_directory_uri() . '/js/modal.js', [], '1.0', true);
+
+    // Unified CE object — nonces, REST URL, calculator rates, currency symbols
+    wp_localize_script('ce-currency-toggle', 'CE', [
+        'restUrl'   => esc_url_raw(rest_url('ce/v1/')),
+        'nonce'     => wp_create_nonce('ce_enquiry_nonce'),
+        'wpNonce'   => wp_create_nonce('wp_rest'),
+        'calcRates' => [
+            'registration' => (float) (function_exists('get_field') ? (get_field('ce_calc_registration_fee', 'option') ?: 2.5) : 2.5),
+            'vat'          => (float) (function_exists('get_field') ? (get_field('ce_calc_vat', 'option') ?: 5) : 5),
+            'agency'       => (float) (function_exists('get_field') ? (get_field('ce_calc_agency_fee', 'option') ?: 2) : 2),
+        ],
+        'currencySymbols' => ['GBP' => '£', 'SAR' => 'SAR ', 'USD' => '$'],
+    ]);
 
     // GA4 custom events — all pages
     wp_enqueue_script('ce-ga4-events', get_template_directory_uri() . '/js/ga4-events.js', [], '1.0', true);
