@@ -50,9 +50,9 @@
 }
 
 #wpadminbar .menupop .ab-sub-wrapper {
-    background: var(--ce-surface);
-    border: 1px solid var(--ce-border);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    background: var(--ce-surface) !important;
+    border: 1px solid var(--ce-border) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
 }
 
 #wpadminbar .ab-submenu .ab-item {
