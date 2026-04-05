@@ -268,3 +268,53 @@ a.submitdelete:hover {
     color: #DC2626 !important;
     text-decoration: underline !important;
 }
+
+/* ── Form Inputs ─────────────────────────────────────────────────────────── */
+.wp-admin input[type="text"],
+.wp-admin input[type="email"],
+.wp-admin input[type="url"],
+.wp-admin input[type="password"],
+.wp-admin input[type="number"],
+.wp-admin input[type="search"],
+.wp-admin textarea,
+.wp-admin select {
+    background: #FFFFFF !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 4px !important;
+    color: #0A0A0A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    box-shadow: none !important;
+    padding: 8px 12px !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.wp-admin input[type="text"]:focus,
+.wp-admin input[type="email"]:focus,
+.wp-admin input[type="url"]:focus,
+.wp-admin input[type="password"]:focus,
+.wp-admin input[type="number"]:focus,
+.wp-admin input[type="search"]:focus,
+.wp-admin textarea:focus,
+.wp-admin select:focus {
+    border-color: #C4973A !important;
+    box-shadow: 0 0 0 2px rgba(196,151,58,0.15) !important;
+    outline: none !important;
+}
+
+.wp-admin label,
+.wp-admin th.label label {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    color: #0A0A0A !important;
+    font-size: 13px !important;
+}
+
+.wp-admin .search-box input[type="search"] {
+    width: 240px;
+}
+
+.wp-admin input[type="checkbox"],
+.wp-admin input[type="radio"] {
+    accent-color: #C4973A;
+}
