@@ -12,7 +12,8 @@
   var output = document.getElementById('ce-calculator-output');
   if (!priceInput || !output) return;
 
-  var rates = window.ceCalcRates || { registration_fee: 2.5, vat: 5, agency_fee: 2 };
+  var ceRates = (window.CE && CE.calcRates) || {};
+  var rates = { registration_fee: ceRates.registration || 2.5, vat: ceRates.vat || 5, agency_fee: ceRates.agency || 2 };
 
   function calculate() {
     var price = parseFloat(priceInput.value) || 0;

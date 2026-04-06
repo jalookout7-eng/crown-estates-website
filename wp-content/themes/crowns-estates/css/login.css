@@ -1,0 +1,143 @@
+/* Crowns Estates — Custom WP Login Page */
+
+body.login {
+    background: #0A0A0A;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Logo / wordmark */
+#login h1 a,
+.login h1 a {
+    background-image: none !important;
+    text-indent: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #C4973A !important;
+    letter-spacing: 0.04em;
+    display: block;
+    text-align: center;
+    padding-bottom: 4px;
+}
+
+#login h1 a::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #C4973A;
+    margin: 6px auto 0;
+    opacity: 0.7;
+}
+
+/* Login card */
+#loginform,
+#lostpasswordform {
+    background: #1A1A1A !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 8px !important;
+    padding: 28px 30px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+}
+
+/* Labels */
+#loginform label,
+#lostpasswordform label {
+    color: #999 !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+}
+
+/* Inputs */
+#loginform input[type="text"],
+#loginform input[type="password"],
+#lostpasswordform input[type="text"] {
+    background: #0f0f0f !important;
+    border: 1px solid #333 !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 10px 12px !important;
+    height: auto !important;
+    box-shadow: none !important;
+    transition: border-color 0.15s;
+}
+
+#loginform input[type="text"]:focus,
+#loginform input[type="password"]:focus,
+#lostpasswordform input[type="text"]:focus {
+    border-color: #C4973A !important;
+    box-shadow: 0 0 0 2px rgba(196,151,58,0.15) !important;
+    outline: none !important;
+}
+
+/* Submit button */
+#loginform .button-primary,
+#lostpasswordform .button-primary,
+.login .button-primary {
+    background: #C4973A !important;
+    border-color: #C4973A !important;
+    color: #fff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    padding: 10px 20px !important;
+    height: auto !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-radius: 4px !important;
+    transition: background 0.15s;
+}
+
+.login .button-primary:hover {
+    background: #B8892E !important;
+    border-color: #B8892E !important;
+}
+
+/* "Remember me" */
+#loginform .forgetmenot label {
+    color: #666 !important;
+    font-size: 12px !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+#loginform input[type="checkbox"] {
+    accent-color: #C4973A;
+}
+
+/* Links */
+.login #nav a,
+.login #backtoblog a {
+    color: #666 !important;
+    font-size: 12px !important;
+}
+
+.login #nav a:hover,
+.login #backtoblog a:hover {
+    color: #C4973A !important;
+}
+
+/* Error / notice messages */
+.login .message,
+.login #login_error {
+    border-left-color: #C4973A !important;
+    background: #1A1A1A !important;
+    color: #ccc !important;
+}
+
+.login #login_error {
+    border-left-color: #EF4444 !important;
+    color: #f87171 !important;
+}
+
+/* Footer */
+.login #backtoblog {
+    text-align: center;
+}
