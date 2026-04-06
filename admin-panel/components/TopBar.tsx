@@ -16,7 +16,7 @@ export default function TopBar({ title, username }: TopBarProps) {
     } catch {
       // logout API unreachable — clear cookies server-side failed, but still navigate away
     } finally {
-      router.push('/admin/login');
+      router.push('/login');
       router.refresh();
     }
   }

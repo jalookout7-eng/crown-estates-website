@@ -8,12 +8,14 @@ export function middleware(request: NextRequest) {
   const isLoginPage = pathname === '/login' || pathname === '/login/';
 
   if (!token && !isLoginPage) {
-    const loginUrl = new URL('/login', request.url);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = '/login';
     return NextResponse.redirect(loginUrl);
   }
 
   if (token && isLoginPage) {
-    const dashUrl = new URL('/dashboard', request.url);
+    const dashUrl = request.nextUrl.clone();
+    dashUrl.pathname = '/dashboard';
     return NextResponse.redirect(dashUrl);
   }
 
